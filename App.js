@@ -1,46 +1,13 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {StyleSheet, Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MainStack from './navigate.js';
 
 const App = () => {
-  return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar backgroundColor="#342343" barStyle={'dark-content'} />
-      <View style={styles.container}>
-        <Text>Приветикgergd</Text>
-      </View>
-    </SafeAreaView>
-  );
+  return <MainStack />;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 15,
-    marginTop: 15,
-  },
-  view1: {
-    width: '33%',
-    height: 150,
-    borderRadius: 8,
-    backgroundColor: 'red',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
