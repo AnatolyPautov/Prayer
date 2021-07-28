@@ -33,7 +33,7 @@ const Board = ({navigation}) => {
           style={styles.input}
           onChangeText={setValue}
           value={value}
-          placeholder="My Desc"
+          placeholder="My Desk"
           onSubmitEditing={pressHandler}
         />
         <View style={styles.plus}>
