@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, {Mask, Path, G} from 'react-native-svg';
 
-const PrayerIcon = props => {
+const PrayerIcon = (props: any) => {
   return (
     <Svg
       width={29}
@@ -10,13 +10,7 @@ const PrayerIcon = props => {
       fill="#fff"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
-      <Mask
-        id="prefix__a"
-        maskUnits="userSpaceOnUse"
-        x={0}
-        y={0}
-        width={29}
-        height={23}>
+      <Mask id="prefix__a" x={0} y={0} width={29} height={23}>
         <Path
           fillRule="evenodd"
           clipRule="evenodd"

@@ -11,24 +11,30 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 import Plus from '../../icons/Plus';
 import Prayer from '../Prayer/Prayer';
+import {useSelector} from 'react-redux';
+import {getPrayers, useAppDispatch} from '../../store/store';
+import {addPrayer} from '../../store/prayerSlice';
 
-const Prayers = ({navigation}) => {
-  const [tasks, setTasks] = React.useState([]);
-  const [value, setValue] = React.useState('');
+interface PrayerProps {
+  navigation: any;
+  route: any;
+}
+const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
+  const [value, setValue] = React.useState<string>('');
+
+  const {boardId} = route.params;
+
+  const allPrayers = useSelector(getPrayers);
+  const prayers = allPrayers.filter(prayer => prayer.boardId === boardId);
+  const dispatch = useAppDispatch();
 
   const pressHandler = () => {
     if (value.trim()) {
-      addTodo(value);
+      dispatch(addPrayer({text: value, boardId}));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');
     }
-  };
-  const addTodo = title => {
-    setTasks(prev => [...prev, {id: Date.now().toString(), title}]);
-  };
-  const removeTasks = id => {
-    setTasks(tasks.filter(task => task.id != id));
   };
 
   return (
@@ -50,13 +56,9 @@ const Prayers = ({navigation}) => {
       </View>
       <FlatList
         keyExtractor={item => item.id}
-        data={tasks}
+        data={prayers}
         renderItem={({item}) => (
-          <Prayer
-            removeTasks={removeTasks}
-            navigate={navigation.navigate}
-            item={item}
-          />
+          <Prayer navigate={navigation.navigate} prayer={item} />
         )}
       />
     </View>

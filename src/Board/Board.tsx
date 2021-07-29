@@ -7,23 +7,30 @@ import {
   TextInput,
   Alert,
   Button,
+  TouchableOpacity,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 import Plus from '../../icons/Plus';
+import {addBoard} from '../../store/prayerSlice';
+import {getBoards, useAppDispatch} from '../../store/store';
 
-const Board = ({navigation}) => {
-  const [tasks, setTasks] = React.useState([]);
-  const [value, setValue] = React.useState('');
+interface BoardProps {
+  navigation: any;
+}
+
+const Board: React.FC<BoardProps> = ({navigation}) => {
+  const [value, setValue] = React.useState<string>('');
+
+  const boards = useSelector(getBoards);
+  const dispatch = useAppDispatch();
 
   const pressHandler = () => {
     if (value.trim()) {
-      addTodo(value);
+      dispatch(addBoard({text: value}));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');
     }
-  };
-  const addTodo = title => {
-    setTasks(prev => [...prev, {id: Date.now().toString(), title}]);
   };
 
   return (
@@ -31,9 +38,9 @@ const Board = ({navigation}) => {
       <View style={styles.block}>
         <TextInput
           style={styles.input}
-          onChangeText={setValue}
           value={value}
           placeholder="My Desk"
+          onChangeText={setValue}
           onSubmitEditing={pressHandler}
         />
         <View style={styles.plus}>
@@ -41,14 +48,13 @@ const Board = ({navigation}) => {
         </View>
       </View>
       <FlatList
-        keyExtractor={item => item.id}
-        data={tasks}
+        keyExtractor={(item: any) => item.id}
+        data={boards}
         renderItem={({item}) => (
-          <Text
-            onPress={() => navigation.navigate('Prayers')}
-            style={styles.text}>
-            {item.title}
-          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Prayers', {boardId: item.id})}>
+            <Text style={styles.text}>{item.text}</Text>
+          </TouchableOpacity>
         )}
       />
     </View>
