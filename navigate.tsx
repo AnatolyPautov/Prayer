@@ -7,6 +7,7 @@ import Board from './src/Board/Board';
 import Details from './src/Details/Details';
 import {Text, Button, StyleSheet} from 'react-native';
 import PrayerIcon from './icons/PrayerIcon';
+import Login from './src/Login/Login';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,11 @@ export default function Navigate() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        {/* <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false}}
+        /> */}
         <Stack.Screen
           name="Board"
           component={Board}

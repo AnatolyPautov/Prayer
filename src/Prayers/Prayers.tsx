@@ -7,13 +7,16 @@ import {
   TextInput,
   Alert,
   Button,
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import Plus from '../../icons/Plus';
 import Prayer from '../Prayer/Prayer';
 import {useSelector} from 'react-redux';
 import {getPrayers, useAppDispatch} from '../../store/store';
 import {addPrayer} from '../../store/prayerSlice';
+import SettingIcon from '../../icons/SettingIcon';
+import styled from 'styled-components/native';
 
 interface PrayerProps {
   navigation: any;
@@ -21,16 +24,19 @@ interface PrayerProps {
 }
 const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
   const [value, setValue] = React.useState<string>('');
+  const [answers, setAnswers] = React.useState<boolean>(false);
 
-  const {boardId} = route.params;
+  const {board} = route.params;
 
   const allPrayers = useSelector(getPrayers);
-  const prayers = allPrayers.filter(prayer => prayer.boardId === boardId);
+  const prayers = allPrayers.filter(prayer => prayer.boardId === board.id);
+  const answeredPrayers = prayers.filter(prayer => prayer.answered === true);
+  const unAnsweredPrayers = prayers.filter(prayer => prayer.answered === false);
   const dispatch = useAppDispatch();
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(addPrayer({text: value, boardId}));
+      dispatch(addPrayer({text: value, boardId: board.id, answered: false}));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');
@@ -38,60 +44,105 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={{fontSize: 17}}>To Do</Text>
-      </View>
-      <View style={styles.block}>
-        <View style={styles.plus}>
+    <Container>
+      <Header>
+        <Text style={{fontSize: 17}}>{board.text}</Text>
+        <Setting>
+          <SettingIcon />
+        </Setting>
+      </Header>
+      <InputBlock>
+        <PlusContainer>
           <Plus onPress={pressHandler} />
-        </View>
-        <TextInput
-          style={styles.input}
+        </PlusContainer>
+        <AddPrayer
           onChangeText={setValue}
           value={value}
           placeholder="Add a prayer..."
           onSubmitEditing={pressHandler}
         />
-      </View>
-      <FlatList
-        keyExtractor={item => item.id}
-        data={prayers}
-        renderItem={({item}) => (
-          <Prayer navigate={navigation.navigate} prayer={item} />
+      </InputBlock>
+      <ScrollView>
+        <View>
+          <FlatList
+            keyExtractor={item => item.id}
+            data={unAnsweredPrayers}
+            renderItem={({item}) => (
+              <Prayer navigate={navigation.navigate} prayer={item} />
+            )}
+          />
+        </View>
+        {answeredPrayers.length > 0 && (
+          <ShowButton onPress={() => setAnswers(!answers)}>
+            <ButtonText>
+              {answers ? 'hide' : 'show'} Answered Prayers
+            </ButtonText>
+          </ShowButton>
         )}
-      />
-    </View>
+        {answers && (
+          <View>
+            <FlatList
+              keyExtractor={item => item.id}
+              data={answeredPrayers}
+              renderItem={({item}) => (
+                <Prayer navigate={navigation.navigate} prayer={item} />
+              )}
+            />
+          </View>
+        )}
+      </ScrollView>
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  header: {
-    paddingVertical: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  block: {
-    flexDirection: 'row',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#E5E5E5',
-    margin: 15,
-    borderRadius: 10,
-  },
-  input: {
-    width: '100%',
-    fontSize: 17,
-  },
-  plus: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 14,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  background: white;
+`;
+const Header = styled.View`
+  padding: 22px 0;
+  justify-content: center;
+  align-items: center;
+`;
+const InputBlock = styled.View`
+  flex-direction: row;
+  border-style: solid;
+  border-color: #e5e5e5;
+  border-width: 1px;
+  margin: 15px 15px 0;
+  border-radius: 10px;
+`;
+const AddPrayer = styled.TextInput`
+  width: 100%;
+  font-size: 17px;
+`;
+
+const ShowButton = styled.TouchableOpacity`
+  margin: 21px auto;
+  width: 70%;
+  background: #bfb393;
+  border-radius: 15px;
+  padding: 8px 23px;
+`;
+
+const ButtonText = styled.Text`
+  font-size: 12px;
+  line-height: 14px;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+`;
+const Setting = styled.View`
+  position: absolute;
+  top: 100%;
+  right: 15px;
+  width: 24px;
+  height: 24px;
+`;
+const PlusContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin: 14px;
+`;
 
 export default Prayers;

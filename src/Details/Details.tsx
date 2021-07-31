@@ -40,37 +40,46 @@ const Details: React.FC<DetailsProps> = ({route}) => {
       <Heading>
         <Text style={{fontSize: 17, color: '#fff'}}>{prayer.text}</Text>
       </Heading>
+      <View>
+        <Text>Last prayed 8 min ago</Text>
+      </View>
       <DataPrayed>
         <PrayedBlock>
-          <Text>July 25 2017</Text>
+          <DataPrayedTitle>July 25 2017</DataPrayedTitle>
+          <Text>Date Added</Text>
+          <Text>Opened for 4 days</Text>
         </PrayedBlock>
         <PrayedBlock>
-          <Text>123</Text>
+          <DataPrayedTitle>123</DataPrayedTitle>
+          <Text>Times Prayed Total</Text>
         </PrayedBlock>
         <PrayedBlock>
-          <Text>July 25 2017</Text>
+          <DataPrayedTitle>63</DataPrayedTitle>
+          <Text>Times Prayed by Me</Text>
         </PrayedBlock>
         <PrayedBlock>
-          <Text>123</Text>
+          <DataPrayedTitle>60</DataPrayedTitle>
+          <Text>Times Prayed by Others</Text>
         </PrayedBlock>
       </DataPrayed>
+      <Title>members</Title>
       <Title>comments</Title>
       <FlatList
         keyExtractor={(item: any) => item.id}
         data={comments}
         renderItem={({item}) => <Comment comment={item} />}
       />
-      <MessageInput>
+      <MessageContainer>
         <IconContainer>
           <MessageIcon />
         </IconContainer>
-        <TextInput
+        <MessageInput
           value={value}
           placeholder="Add a comment..."
           onChangeText={setValue}
           onSubmitEditing={pressHandler}
         />
-      </MessageInput>
+      </MessageContainer>
     </View>
   );
 };
@@ -84,13 +93,25 @@ const Heading = styled.View`
 const DataPrayed = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  border-style: solid;
+  border-bottom-color: #e5e5e5;
+  border-bottom-width: 1px;
 `;
 const PrayedBlock = styled.View`
   width: 50%;
+  height: 108px;
+  justify-content: center;
   padding-left: 15px;
   border-style: solid;
-  border-color: #e5e5e5;
-  border-width: 1px;
+  border-top-color: #e5e5e5;
+  border-top-width: 1px;
+  border-left-color: #e5e5e5;
+  border-left-width: 1px;
+`;
+const DataPrayedTitle = styled.Text`
+  font-size: 22px;
+  line-height: 26px;
+  color: #bfb393;
 `;
 const Title = styled.Text`
   font-size: 13px;
@@ -103,11 +124,14 @@ const IconContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
-const MessageInput = styled.View`
+const MessageContainer = styled.View`
   flex-direction: row;
   border-style: solid;
   border-top-color: #e5e5e5;
   border-top-width: 1px;
+`;
+const MessageInput = styled.TextInput`
+  width: 100%;
 `;
 
 export default Details;

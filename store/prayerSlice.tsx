@@ -30,8 +30,16 @@ export const pryerSlice = createSlice({
         id: Date.now().toString(),
         text: payload.text,
         boardId: payload.boardId,
+        answered: payload.answered,
       };
       state.prayers.push(newPrayer);
+    },
+    answeredPrayer(state, {payload}) {
+      state.prayers.map(prayer => {
+        if (prayer.id === payload.id) {
+          prayer.answered = payload.newValue;
+        }
+      });
     },
     removePrayer(state, {payload}: PayloadAction<string>) {
       state.prayers = [
@@ -54,7 +62,13 @@ export const pryerSlice = createSlice({
   },
 });
 
-export const {addBoard, addPrayer, removePrayer, addComment, removeComment} =
-  pryerSlice.actions;
+export const {
+  addBoard,
+  addPrayer,
+  removePrayer,
+  answeredPrayer,
+  addComment,
+  removeComment,
+} = pryerSlice.actions;
 
 export default pryerSlice.reducer;

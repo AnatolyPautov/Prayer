@@ -13,6 +13,7 @@ import {useSelector} from 'react-redux';
 import Plus from '../../icons/Plus';
 import {addBoard} from '../../store/prayerSlice';
 import {getBoards, useAppDispatch} from '../../store/store';
+import styled from 'styled-components/native';
 
 interface BoardProps {
   navigation: any;
@@ -35,25 +36,24 @@ const Board: React.FC<BoardProps> = ({navigation}) => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={styles.block}>
-        <TextInput
-          style={styles.input}
+      <BoardInput>
+        <Input
           value={value}
           placeholder="My Desk"
           onChangeText={setValue}
           onSubmitEditing={pressHandler}
         />
-        <View style={styles.plus}>
-          <Plus onPress={pressHandler} />
-        </View>
-      </View>
+        <PlusIcon onPress={pressHandler}>
+          <Plus width={16} />
+        </PlusIcon>
+      </BoardInput>
       <FlatList
         keyExtractor={(item: any) => item.id}
         data={boards}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('Prayers', {boardId: item.id})}>
-            <Text style={styles.text}>{item.text}</Text>
+            onPress={() => navigation.navigate('Prayers', {board: item})}>
+            <BoardText>{item.text}</BoardText>
           </TouchableOpacity>
         )}
       />
@@ -61,34 +61,31 @@ const Board: React.FC<BoardProps> = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  block: {
-    flexDirection: 'row',
-    borderStyle: 'solid',
-    borderBottomWidth: 1,
-    borderColor: '#E5E5E5',
-    paddingVertical: 15,
-  },
-  input: {
-    width: '75%',
-    textAlign: 'center',
-    fontSize: 17,
-  },
-  plus: {
-    width: '25%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    marginHorizontal: 15,
-    marginVertical: 5,
-    borderStyle: 'solid',
-    borderColor: '#E5E5E5',
-    borderWidth: 2,
-    borderRadius: 4,
-    paddingVertical: 20,
-    paddingLeft: 15,
-  },
-});
+const BoardInput = styled.View`
+  flex-direction: row;
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-color: #e5e5e5;
+  padding: 15px 0;
+  justify-content: center;
+`;
+const Input = styled.TextInput`
+  width: 85%;
+  text-align: center;
+  font-size: 17px;
+`;
+const PlusIcon = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+`;
+const BoardText = styled.Text`
+  margin: 10px 15px 0;
+  border-style: solid;
+  border-color: #e5e5e5;
+  border-width: 1px;
+  border-radius: 4px;
+  padding: 20px 0 20px 15px;
+`;
 
 export default Board;

@@ -6,71 +6,68 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {removePrayer} from '../../store/prayerSlice';
+import {answeredPrayer, removePrayer} from '../../store/prayerSlice';
 import {useAppDispatch} from '../../store/store';
 import * as Types from '../../types/types';
+import styled from 'styled-components/native';
 
 interface PrayerProps {
   prayer: Types.Prayer;
   navigate: any;
 }
 const Prayer: React.FC<PrayerProps> = ({prayer, navigate}) => {
-  const [selected, setSelected] = React.useState(false);
-
   const dispatch = useAppDispatch();
 
   const rightSwipe = () => {
     return (
       <TouchableOpacity onPress={() => dispatch(removePrayer(prayer.id))}>
-        <View style={styles.deleteBox}>
+        <DeleteBox>
           <Text style={{color: 'white'}}>Delete</Text>
-        </View>
+        </DeleteBox>
       </TouchableOpacity>
     );
   };
 
   return (
     <Swipeable renderRightActions={rightSwipe}>
-      <TouchableOpacity
-        style={styles.checkboxContainer}
-        onPress={() => navigate('Details', {prayer})}>
-        <CheckBox
-          disabled={false}
-          value={selected}
-          onValueChange={newValue => setSelected(newValue)}
-        />
-        <Text style={selected && styles.strikeout}>{prayer.text}</Text>
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={() => navigate('Details', {prayer})}>
+        <PrayerContainer>
+          <CheckBox
+            disabled={false}
+            value={prayer.answered}
+            onValueChange={newValue =>
+              dispatch(answeredPrayer({id: prayer.id, newValue}))
+            }
+          />
+          <Text style={prayer.answered && {textDecorationLine: 'line-through'}}>
+            {prayer.text}
+          </Text>
+        </PrayerContainer>
+      </TouchableWithoutFeedback>
     </Swipeable>
   );
 };
 
-const styles = StyleSheet.create({
-  checkboxContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderStyle: 'solid',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E5E5',
-    paddingVertical: 15,
-    backgroundColor: 'white',
-    marginHorizontal: 15,
-  },
-  strikeout: {
-    textDecorationLine: 'line-through',
-  },
-  deleteBox: {
-    backgroundColor: '#AC5253',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    height: '100%',
-    marginLeft: 15,
-  },
-});
+const PrayerContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-color: #e5e5e5;
+  padding: 15px 0;
+  background-color: white;
+  margin: 0 15px;
+`;
+const DeleteBox = styled.View`
+  background-color: #ac5253;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 100%;
+`;
 
 export default Prayer;
