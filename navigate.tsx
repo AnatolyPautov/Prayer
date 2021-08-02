@@ -15,11 +15,11 @@ export default function Navigate() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{headerShown: false}}
-        /> */}
+        />
         <Stack.Screen
           name="Board"
           component={Board}
@@ -34,7 +34,7 @@ export default function Navigate() {
           name="Details"
           component={Details}
           options={{
-            title: '',
+            headerTitle: props => <Text>dsdfsdf</Text>,
             headerRight: () => <PrayerIcon style={styles.icon} />,
             headerStyle: {
               backgroundColor: '#BFB393',

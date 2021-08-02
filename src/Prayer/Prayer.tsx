@@ -10,10 +10,18 @@ import {
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {answeredPrayer, removePrayer} from '../../store/prayerSlice';
-import {useAppDispatch} from '../../store/store';
+import {
+  addPrayedCount,
+  checkedPrayer,
+  removePrayer,
+} from '../../store/prayerSlice';
+import {getComments, useAppDispatch} from '../../store/store';
 import * as Types from '../../types/types';
 import styled from 'styled-components/native';
+import PrayerIcon from '../../icons/PrayerIcon';
+import Context from '../../context';
+import UserIcon from '../../icons/UserIcon';
+import {useSelector} from 'react-redux';
 
 interface PrayerProps {
   prayer: Types.Prayer;
@@ -21,6 +29,13 @@ interface PrayerProps {
 }
 const Prayer: React.FC<PrayerProps> = ({prayer, navigate}) => {
   const dispatch = useAppDispatch();
+
+  const {userName} = React.useContext(Context);
+
+  const allComments = useSelector(getComments);
+  const comments = allComments.filter(
+    comment => comment.prayerId === prayer.id,
+  );
 
   const rightSwipe = () => {
     return (
@@ -36,16 +51,43 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigate}) => {
     <Swipeable renderRightActions={rightSwipe}>
       <TouchableWithoutFeedback onPress={() => navigate('Details', {prayer})}>
         <PrayerContainer>
-          <CheckBox
-            disabled={false}
-            value={prayer.answered}
-            onValueChange={newValue =>
-              dispatch(answeredPrayer({id: prayer.id, newValue}))
-            }
-          />
-          <Text style={prayer.answered && {textDecorationLine: 'line-through'}}>
-            {prayer.text}
-          </Text>
+          <PrayerBox>
+            <CheckBox
+              disabled={false}
+              value={prayer.checked}
+              onValueChange={newValue =>
+                dispatch(checkedPrayer({id: prayer.id, newValue}))
+              }
+            />
+            <PrayerText
+              numberOfLines={1}
+              style={prayer.checked && {textDecorationLine: 'line-through'}}>
+              {prayer.text.length > 15
+                ? prayer.text.substring(0, 15) + '...'
+                : prayer.text}
+            </PrayerText>
+          </PrayerBox>
+          <PrayerBox>
+            <View>
+              {comments.length !== 0 && (
+                <IconContainer>
+                  <UserIcon />
+                  <NumberPrayers>{comments.length}</NumberPrayers>
+                </IconContainer>
+              )}
+            </View>
+            <TouchableOpacity
+              onPress={() =>
+                dispatch(addPrayedCount({id: prayer.id, userName}))
+              }>
+              <IconContainer>
+                <PrayerIcon color={'#72A8BC'} />
+                <NumberPrayers>
+                  {prayer.totalCountPrayed !== 0 && prayer.totalCountPrayed}
+                </NumberPrayers>
+              </IconContainer>
+            </TouchableOpacity>
+          </PrayerBox>
         </PrayerContainer>
       </TouchableWithoutFeedback>
     </Swipeable>
@@ -55,6 +97,7 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigate}) => {
 const PrayerContainer = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   border-style: solid;
   border-bottom-width: 1px;
   border-color: #e5e5e5;
@@ -62,12 +105,32 @@ const PrayerContainer = styled.View`
   background-color: white;
   margin: 0 15px;
 `;
+const PrayerBox = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+const PrayerText = styled.Text`
+  font-size: 17px;
+  line-height: 20px;
+`;
 const DeleteBox = styled.View`
   background-color: #ac5253;
   justify-content: center;
   align-items: center;
   width: 80px;
   height: 100%;
+`;
+const IconContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+const NumberPrayers = styled.Text`
+  width: 21px;
+  color: #514d47;
+  font-size: 12px;
+  line-height: 14px;
+  margin-left: 5px;
 `;
 
 export default Prayer;

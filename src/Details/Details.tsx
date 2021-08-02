@@ -7,9 +7,11 @@ import {
   TextInput,
   Alert,
   Button,
+  ScrollView,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
+import Context from '../../context';
 import MessageIcon from '../../icons/MessageIcon';
 import {addComment} from '../../store/prayerSlice';
 import {getComments, useAppDispatch} from '../../store/store';
@@ -23,6 +25,8 @@ const Details: React.FC<DetailsProps> = ({route}) => {
 
   const {prayer} = route.params;
 
+  const {userName} = React.useContext(Context);
+
   const allComments = useSelector(getComments);
   const comments = allComments.filter(
     comment => comment.prayerId === prayer.id,
@@ -31,56 +35,60 @@ const Details: React.FC<DetailsProps> = ({route}) => {
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(addComment({text: value, prayerId: prayer.id}));
+      dispatch(
+        addComment({text: value, prayerId: prayer.id, author: userName}),
+      );
       setValue('');
     }
   };
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <Heading>
-        <Text style={{fontSize: 17, color: '#fff'}}>{prayer.text}</Text>
-      </Heading>
-      <View>
-        <Text>Last prayed 8 min ago</Text>
-      </View>
-      <DataPrayed>
-        <PrayedBlock>
-          <DataPrayedTitle>July 25 2017</DataPrayedTitle>
-          <Text>Date Added</Text>
-          <Text>Opened for 4 days</Text>
-        </PrayedBlock>
-        <PrayedBlock>
-          <DataPrayedTitle>123</DataPrayedTitle>
-          <Text>Times Prayed Total</Text>
-        </PrayedBlock>
-        <PrayedBlock>
-          <DataPrayedTitle>63</DataPrayedTitle>
-          <Text>Times Prayed by Me</Text>
-        </PrayedBlock>
-        <PrayedBlock>
-          <DataPrayedTitle>60</DataPrayedTitle>
-          <Text>Times Prayed by Others</Text>
-        </PrayedBlock>
-      </DataPrayed>
-      <Title>members</Title>
-      <Title>comments</Title>
-      <FlatList
-        keyExtractor={(item: any) => item.id}
-        data={comments}
-        renderItem={({item}) => <Comment comment={item} />}
-      />
-      <MessageContainer>
-        <IconContainer>
-          <MessageIcon />
-        </IconContainer>
-        <MessageInput
-          value={value}
-          placeholder="Add a comment..."
-          onChangeText={setValue}
-          onSubmitEditing={pressHandler}
+    <ScrollView>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <Heading>
+          <Text style={{fontSize: 17, color: '#fff'}}>{prayer.text}</Text>
+        </Heading>
+        <View>
+          <Text>Last prayed 8 min ago</Text>
+        </View>
+        <DataPrayed>
+          <PrayedBlock>
+            <DataPrayedTitle>July 25 2017</DataPrayedTitle>
+            <Text>Date Added</Text>
+            <Text>Opened for 4 days</Text>
+          </PrayedBlock>
+          <PrayedBlock>
+            <DataPrayedTitle>{prayer.totalCountPrayed}</DataPrayedTitle>
+            <Text>Times Prayed Total</Text>
+          </PrayedBlock>
+          <PrayedBlock>
+            <DataPrayedTitle>{prayer.myCountPrayed}</DataPrayedTitle>
+            <Text>Times Prayed by Me</Text>
+          </PrayedBlock>
+          <PrayedBlock>
+            <DataPrayedTitle>{prayer.othersCountPrayed}</DataPrayedTitle>
+            <Text>Times Prayed by Others</Text>
+          </PrayedBlock>
+        </DataPrayed>
+        <Title>members</Title>
+        <Title>comments</Title>
+        <FlatList
+          keyExtractor={(item: any) => item.id}
+          data={comments}
+          renderItem={({item}) => <Comment comment={item} />}
         />
-      </MessageContainer>
-    </View>
+        <MessageContainer>
+          <IconContainer>
+            <MessageIcon />
+          </IconContainer>
+          <MessageInput
+            value={value}
+            placeholder="Add a comment..."
+            onChangeText={setValue}
+            onSubmitEditing={pressHandler}
+          />
+        </MessageContainer>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -132,6 +140,7 @@ const MessageContainer = styled.View`
 `;
 const MessageInput = styled.TextInput`
   width: 100%;
+  height: 56px;
 `;
 
 export default Details;

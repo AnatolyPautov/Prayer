@@ -6,12 +6,17 @@ export type Prayer = {
   id: string;
   text: string;
   boardId: string;
-  answered: boolean;
+  checked: boolean;
+  totalCountPrayed: number;
+  myCountPrayed: number;
+  othersCountPrayed: number;
+  author: string;
 };
 export type Comment = {
   id: string;
   text: string;
   prayerId: string;
+  author: string;
 };
 export type UserName = {
   firstName: string;
@@ -22,9 +27,14 @@ export type NewBoard = {
 export type NewPrayer = {
   text: string;
   boardId: string;
-  answered: boolean;
+  checked: boolean;
+  totalCountPrayed: number;
+  myCountPrayed: number;
+  othersCountPrayed: number;
+  author: string;
 };
 export type NewComment = {
   text: string;
   prayerId: string;
+  author: string;
 };

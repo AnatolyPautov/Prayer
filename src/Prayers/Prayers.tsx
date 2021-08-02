@@ -17,6 +17,7 @@ import {getPrayers, useAppDispatch} from '../../store/store';
 import {addPrayer} from '../../store/prayerSlice';
 import SettingIcon from '../../icons/SettingIcon';
 import styled from 'styled-components/native';
+import Context from '../../context';
 
 interface PrayerProps {
   navigation: any;
@@ -28,15 +29,27 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
 
   const {board} = route.params;
 
+  const {userName} = React.useContext(Context);
+
   const allPrayers = useSelector(getPrayers);
   const prayers = allPrayers.filter(prayer => prayer.boardId === board.id);
-  const answeredPrayers = prayers.filter(prayer => prayer.answered === true);
-  const unAnsweredPrayers = prayers.filter(prayer => prayer.answered === false);
+  const answeredPrayers = prayers.filter(prayer => prayer.checked === true);
+  const unansweredPrayers = prayers.filter(prayer => prayer.checked === false);
   const dispatch = useAppDispatch();
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(addPrayer({text: value, boardId: board.id, answered: false}));
+      dispatch(
+        addPrayer({
+          text: value,
+          boardId: board.id,
+          checked: false,
+          totalCountPrayed: 0,
+          myCountPrayed: 0,
+          othersCountPrayed: 0,
+          author: userName,
+        }),
+      );
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');
@@ -66,7 +79,7 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
         <View>
           <FlatList
             keyExtractor={item => item.id}
-            data={unAnsweredPrayers}
+            data={unansweredPrayers}
             renderItem={({item}) => (
               <Prayer navigate={navigation.navigate} prayer={item} />
             )}
@@ -113,8 +126,9 @@ const InputBlock = styled.View`
   border-radius: 10px;
 `;
 const AddPrayer = styled.TextInput`
-  width: 100%;
+  width: 75%;
   font-size: 17px;
+  overflow: hidden;
 `;
 
 const ShowButton = styled.TouchableOpacity`

@@ -5,7 +5,7 @@ const PrayerIcon = (props: any) => {
   return (
     <Svg
       width={29}
-      height={23}
+      height={29}
       viewBox="0 0 29 23"
       fill="#fff"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ const PrayerIcon = (props: any) => {
         />
       </Mask>
       <G mask="url(#prefix__a)">
-        <Path fill="#fff" d="M.001-4h29v29h-29z" />
+        <Path fill={props.color || '#fff'} d="M.001-4h29v29h-29z" />
       </G>
     </Svg>
   );

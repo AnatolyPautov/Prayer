@@ -1,11 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MainStack from './navigate';
+import Context from './context';
 
 const App = () => {
-  return <MainStack />;
+  const [userName, setUserName] = React.useState<string>('');
+
+  return (
+    <Context.Provider value={{userName, setUserName}}>
+      <MainStack />
+    </Context.Provider>
+  );
 };
 
 const styles = StyleSheet.create({});

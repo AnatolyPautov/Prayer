@@ -21,7 +21,6 @@ export const pryerSlice = createSlice({
       const newBoard = {
         id: Date.now().toString(),
         text: payload.text,
-        description: '',
       };
       state.boards.push(newBoard);
     },
@@ -30,14 +29,18 @@ export const pryerSlice = createSlice({
         id: Date.now().toString(),
         text: payload.text,
         boardId: payload.boardId,
-        answered: payload.answered,
+        checked: payload.checked,
+        totalCountPrayed: payload.totalCountPrayed,
+        myCountPrayed: payload.myCountPrayed,
+        othersCountPrayed: payload.othersCountPrayed,
+        author: payload.author,
       };
       state.prayers.push(newPrayer);
     },
-    answeredPrayer(state, {payload}) {
+    checkedPrayer(state, {payload}) {
       state.prayers.map(prayer => {
         if (prayer.id === payload.id) {
-          prayer.answered = payload.newValue;
+          prayer.checked = payload.newValue;
         }
       });
     },
@@ -46,11 +49,22 @@ export const pryerSlice = createSlice({
         ...state.prayers.filter(prayer => prayer.id !== payload),
       ];
     },
+    addPrayedCount(state, {payload}) {
+      state.prayers.map(prayer => {
+        if (prayer.id === payload.id) {
+          ++prayer.totalCountPrayed;
+          prayer.author === payload.userName
+            ? ++prayer.myCountPrayed
+            : ++prayer.othersCountPrayed;
+        }
+      });
+    },
     addComment(state, {payload}: PayloadAction<Types.NewComment>) {
       const newComment = {
         id: Date.now().toString(),
         text: payload.text,
         prayerId: payload.prayerId,
+        author: payload.author,
       };
       state.comments.push(newComment);
     },
@@ -66,9 +80,10 @@ export const {
   addBoard,
   addPrayer,
   removePrayer,
-  answeredPrayer,
+  checkedPrayer,
   addComment,
   removeComment,
+  addPrayedCount,
 } = pryerSlice.actions;
 
 export default pryerSlice.reducer;
