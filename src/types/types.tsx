@@ -1,3 +1,5 @@
+import {Routes} from '../navigation/routes';
+
 export type Board = {
   id: string;
   text: string;
@@ -37,4 +39,11 @@ export type NewComment = {
   text: string;
   prayerId: string;
   author: string;
+};
+
+export type RootStackParamList = {
+  [Routes.LoginScreen]: undefined;
+  [Routes.BoardScreen]: undefined;
+  [Routes.PrayersScreen]: {board: Board};
+  [Routes.DetailsScreen]: {prayer: Prayer};
 };

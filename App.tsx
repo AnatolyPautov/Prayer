@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import MainStack from './navigate';
+import MainStack from './src/navigation/navigate';
 import Context from './context';
 
 const App = () => {

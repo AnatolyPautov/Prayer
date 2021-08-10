@@ -11,12 +11,15 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import Plus from '../../icons/Plus';
-import {addBoard} from '../../store/prayerSlice';
-import {getBoards, useAppDispatch} from '../../store/store';
 import styled from 'styled-components/native';
+import {addBoard} from '../../store/boardsSlice';
+import {getBoards, useAppDispatch} from '../../store/store';
+import {StackNavigationProp} from '@react-navigation/stack';
+import * as Types from '../../types/types';
+import {Routes} from '../../navigation/routes';
 
 interface BoardProps {
-  navigation: any;
+  navigation: StackNavigationProp<Types.RootStackParamList, Routes.BoardScreen>;
 }
 
 const Board: React.FC<BoardProps> = ({navigation}) => {
@@ -48,11 +51,13 @@ const Board: React.FC<BoardProps> = ({navigation}) => {
         </PlusIcon>
       </BoardInput>
       <FlatList
-        keyExtractor={(item: any) => item.id}
+        keyExtractor={item => item.id}
         data={boards}
         renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('Prayers', {board: item})}>
+            onPress={() =>
+              navigation.navigate(Routes.PrayersScreen, {board: item})
+            }>
             <BoardText>{item.text}</BoardText>
           </TouchableOpacity>
         )}

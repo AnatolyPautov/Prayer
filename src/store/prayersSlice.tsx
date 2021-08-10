@@ -1,29 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import * as Types from '../types/types';
 
-interface PrayerSliceState {
-  boards: Types.Board[];
+interface PrayersSliceState {
   prayers: Types.Prayer[];
-  comments: Types.Comment[];
 }
 
-const initialState: PrayerSliceState = {
-  boards: [],
+const initialState: PrayersSliceState = {
   prayers: [],
-  comments: [],
 };
 
-export const pryerSlice = createSlice({
-  name: 'Prayer',
+export const boardsSlice = createSlice({
+  name: 'Prayers',
   initialState,
   reducers: {
-    addBoard(state, {payload}: PayloadAction<Types.NewBoard>) {
-      const newBoard = {
-        id: Date.now().toString(),
-        text: payload.text,
-      };
-      state.boards.push(newBoard);
-    },
     addPrayer(state, {payload}: PayloadAction<Types.NewPrayer>) {
       const newPrayer = {
         id: Date.now().toString(),
@@ -59,31 +48,10 @@ export const pryerSlice = createSlice({
         }
       });
     },
-    addComment(state, {payload}: PayloadAction<Types.NewComment>) {
-      const newComment = {
-        id: Date.now().toString(),
-        text: payload.text,
-        prayerId: payload.prayerId,
-        author: payload.author,
-      };
-      state.comments.push(newComment);
-    },
-    removeComment(state, {payload}: PayloadAction<string>) {
-      state.comments = [
-        ...state.comments.filter(comment => comment.id !== payload),
-      ];
-    },
   },
 });
 
-export const {
-  addBoard,
-  addPrayer,
-  removePrayer,
-  checkedPrayer,
-  addComment,
-  removeComment,
-  addPrayedCount,
-} = pryerSlice.actions;
+export const {addPrayer, removePrayer, checkedPrayer, addPrayedCount} =
+  boardsSlice.actions;
 
-export default pryerSlice.reducer;
+export default boardsSlice.reducer;

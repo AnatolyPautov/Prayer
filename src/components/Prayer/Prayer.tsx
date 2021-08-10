@@ -10,32 +10,34 @@ import {
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {getComments, getCommentsById, useAppDispatch} from '../../store/store';
+import styled from 'styled-components/native';
+import PrayerIcon from '../../icons/PrayerIcon';
+import UserIcon from '../../icons/UserIcon';
+import {useSelector} from 'react-redux';
+import Context from '../../../context';
+import {StackNavigationProp} from '@react-navigation/stack';
+import * as Types from '../../types/types';
 import {
   addPrayedCount,
   checkedPrayer,
   removePrayer,
-} from '../../store/prayerSlice';
-import {getComments, useAppDispatch} from '../../store/store';
-import * as Types from '../../types/types';
-import styled from 'styled-components/native';
-import PrayerIcon from '../../icons/PrayerIcon';
-import Context from '../../context';
-import UserIcon from '../../icons/UserIcon';
-import {useSelector} from 'react-redux';
+} from '../../store/prayersSlice';
+import {Routes} from '../../navigation/routes';
 
 interface PrayerProps {
   prayer: Types.Prayer;
-  navigate: any;
+  navigation: StackNavigationProp<
+    Types.RootStackParamList,
+    Routes.PrayersScreen
+  >;
 }
-const Prayer: React.FC<PrayerProps> = ({prayer, navigate}) => {
+const Prayer: React.FC<PrayerProps> = ({prayer, navigation}) => {
   const dispatch = useAppDispatch();
 
   const {userName} = React.useContext(Context);
 
-  const allComments = useSelector(getComments);
-  const comments = allComments.filter(
-    comment => comment.prayerId === prayer.id,
-  );
+  const comments = useSelector(getCommentsById(prayer.id));
 
   const rightSwipe = () => {
     return (
@@ -49,7 +51,8 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigate}) => {
 
   return (
     <Swipeable renderRightActions={rightSwipe}>
-      <TouchableWithoutFeedback onPress={() => navigate('Details', {prayer})}>
+      <TouchableWithoutFeedback
+        onPress={() => navigation.navigate(Routes.DetailsScreen, {prayer})}>
         <PrayerContainer>
           <PrayerBox>
             <CheckBox

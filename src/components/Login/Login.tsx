@@ -8,22 +8,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styled from 'styled-components/native';
-import Context from '../../context';
+import Context from '../../../context';
+import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
+import {Routes} from '../../navigation/routes';
+import {useAppDispatch} from '../../store/store';
+import {setUser} from '../../store/userSlice';
 
 interface LoginProps {
-  navigation: any;
+  navigation: StackNavigationProp<Types.RootStackParamList, Routes.LoginScreen>;
 }
 
 const Login: React.FC<LoginProps> = ({navigation}) => {
   const {setUserName, userName} = React.useContext(Context);
 
+  const dispatch = useAppDispatch();
   return (
     <Container>
       <LoginBlock>
         <LoginInput onChangeText={setUserName} placeholder="Введите имя" />
         <LoginButton
-          onPress={() => userName.trim() && navigation.navigate('Board')}>
+          onPress={() =>
+            userName.trim() &&
+            dispatch(setUser(userName)) &&
+            navigation.navigate(Routes.BoardScreen)
+          }>
           <Text>Войти</Text>
         </LoginButton>
       </LoginBlock>

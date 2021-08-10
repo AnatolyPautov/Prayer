@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {useAppDispatch} from '../../store/store';
 import * as Types from '../../types/types';
 import styled from 'styled-components/native';
-import {removeComment} from '../../store/prayerSlice';
+import {useAppDispatch} from '../../store/store';
+import {removeComment} from '../../store/commentsSlice';
 
 interface CommentProps {
   comment: Types.Comment;

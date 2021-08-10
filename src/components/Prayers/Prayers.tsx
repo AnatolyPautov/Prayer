@@ -13,15 +13,28 @@ import {
 import Plus from '../../icons/Plus';
 import Prayer from '../Prayer/Prayer';
 import {useSelector} from 'react-redux';
-import {getPrayers, useAppDispatch} from '../../store/store';
-import {addPrayer} from '../../store/prayerSlice';
+import {
+  getPrayers,
+  getPrayersById,
+  getPrayersChecked,
+  getPrayersUnchecked,
+  useAppDispatch,
+} from '../../store/store';
 import SettingIcon from '../../icons/SettingIcon';
 import styled from 'styled-components/native';
-import Context from '../../context';
+import Context from '../../../context';
+import {StackNavigationProp} from '@react-navigation/stack';
+import * as Types from '../../types/types';
+import {RouteProp} from '@react-navigation/native';
+import {Routes} from '../../navigation/routes';
+import {addPrayer} from '../../store/prayersSlice';
 
 interface PrayerProps {
-  navigation: any;
-  route: any;
+  navigation: StackNavigationProp<
+    Types.RootStackParamList,
+    Routes.PrayersScreen
+  >;
+  route: RouteProp<Types.RootStackParamList, Routes.PrayersScreen>;
 }
 const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
   const [value, setValue] = React.useState<string>('');
@@ -31,10 +44,8 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
 
   const {userName} = React.useContext(Context);
 
-  const allPrayers = useSelector(getPrayers);
-  const prayers = allPrayers.filter(prayer => prayer.boardId === board.id);
-  const answeredPrayers = prayers.filter(prayer => prayer.checked === true);
-  const unansweredPrayers = prayers.filter(prayer => prayer.checked === false);
+  const checkedPrayers = useSelector(getPrayersChecked(board.id));
+  const unCheckedPrayers = useSelector(getPrayersUnchecked(board.id));
   const dispatch = useAppDispatch();
 
   const pressHandler = () => {
@@ -76,33 +87,22 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
         />
       </InputBlock>
       <ScrollView>
-        <View>
-          <FlatList
-            keyExtractor={item => item.id}
-            data={unansweredPrayers}
-            renderItem={({item}) => (
-              <Prayer navigate={navigation.navigate} prayer={item} />
-            )}
-          />
-        </View>
-        {answeredPrayers.length > 0 && (
+        {unCheckedPrayers.map(item => {
+          return <Prayer key={item.id} navigation={navigation} prayer={item} />;
+        })}
+        {checkedPrayers.length > 0 && (
           <ShowButton onPress={() => setAnswers(!answers)}>
             <ButtonText>
               {answers ? 'hide' : 'show'} Answered Prayers
             </ButtonText>
           </ShowButton>
         )}
-        {answers && (
-          <View>
-            <FlatList
-              keyExtractor={item => item.id}
-              data={answeredPrayers}
-              renderItem={({item}) => (
-                <Prayer navigate={navigation.navigate} prayer={item} />
-              )}
-            />
-          </View>
-        )}
+        {answers &&
+          checkedPrayers.map(item => {
+            return (
+              <Prayer key={item.id} navigation={navigation} prayer={item} />
+            );
+          })}
       </ScrollView>
     </Container>
   );
