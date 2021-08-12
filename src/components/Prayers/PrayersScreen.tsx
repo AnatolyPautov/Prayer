@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Plus from '../../icons/Plus';
-import Prayer from '../Prayer/Prayer';
+import Prayer from '../Prayer';
 import {useSelector} from 'react-redux';
 import {
   getPrayers,
@@ -36,7 +36,7 @@ interface PrayerProps {
   >;
   route: RouteProp<Types.RootStackParamList, Routes.PrayersScreen>;
 }
-const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
+const PrayersScreen: React.FC<PrayerProps> = ({navigation, route}) => {
   const [value, setValue] = React.useState<string>('');
   const [answers, setAnswers] = React.useState<boolean>(false);
 
@@ -52,8 +52,8 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
     if (value.trim()) {
       dispatch(
         addPrayer({
-          text: value,
-          boardId: board.id,
+          title: value,
+          columnId: board.id,
           checked: false,
           totalCountPrayed: 0,
           myCountPrayed: 0,
@@ -70,7 +70,7 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
   return (
     <Container>
       <Header>
-        <Text style={{fontSize: 17}}>{board.text}</Text>
+        <Text style={{fontSize: 17}}>{board.title}</Text>
         <Setting>
           <SettingIcon />
         </Setting>
@@ -91,11 +91,13 @@ const Prayers: React.FC<PrayerProps> = ({navigation, route}) => {
           return <Prayer key={item.id} navigation={navigation} prayer={item} />;
         })}
         {checkedPrayers.length > 0 && (
-          <ShowButton onPress={() => setAnswers(!answers)}>
-            <ButtonText>
-              {answers ? 'hide' : 'show'} Answered Prayers
-            </ButtonText>
-          </ShowButton>
+          <ShowButtonContainer answers={answers}>
+            <ShowButton onPress={() => setAnswers(!answers)}>
+              <ButtonText>
+                {answers ? 'hide' : 'show'} Answered Prayers
+              </ButtonText>
+            </ShowButton>
+          </ShowButtonContainer>
         )}
         {answers &&
           checkedPrayers.map(item => {
@@ -130,13 +132,24 @@ const AddPrayer = styled.TextInput`
   font-size: 17px;
   overflow: hidden;
 `;
-
+type ShowButtonProps = {
+  answers: boolean;
+};
+const ShowButtonContainer = styled.View<ShowButtonProps>`
+  margin: 0 15px;
+  border-style: solid;
+  border-bottom-width: ${({answers}) => (answers ? '1px' : '0')};
+  border-color: #e5e5e5;
+`;
 const ShowButton = styled.TouchableOpacity`
   margin: 21px auto;
   width: 70%;
   background: #bfb393;
   border-radius: 15px;
   padding: 8px 23px;
+  border-style: solid;
+  border-bottom-width: 1px;
+  border-color: #e5e5e5;
 `;
 
 const ButtonText = styled.Text`
@@ -159,4 +172,4 @@ const PlusContainer = styled.View`
   margin: 14px;
 `;
 
-export default Prayers;
+export default PrayersScreen;

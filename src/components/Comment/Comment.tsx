@@ -35,7 +35,7 @@ const Comment: React.FC<CommentProps> = ({comment}) => {
         <Avatar></Avatar>
         <View>
           <Text>{comment.author}</Text>
-          <Text>{comment.text}</Text>
+          <Text>{comment.body}</Text>
         </View>
       </Container>
     </Swipeable>

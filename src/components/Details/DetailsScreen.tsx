@@ -17,7 +17,7 @@ import Context from '../../../context';
 import MessageIcon from '../../icons/MessageIcon';
 import Plus from '../../icons/Plus';
 import {getComments, getCommentsById, useAppDispatch} from '../../store/store';
-import Comment from '../Comment/Comment';
+import Comment from '../Comment';
 import * as Types from '../../types/types';
 import {Routes} from '../../navigation/routes';
 import {addComment} from '../../store/commentsSlice';
@@ -32,7 +32,7 @@ interface DetailsProps {
     Routes.DetailsScreen
   >;
 }
-const Details: React.FC<DetailsProps> = ({route, navigation}) => {
+const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
   const [value, setValue] = React.useState<string>('');
 
   let date = new Date();
@@ -47,7 +47,12 @@ const Details: React.FC<DetailsProps> = ({route, navigation}) => {
   const pressHandler = () => {
     if (value.trim()) {
       dispatch(
-        addComment({text: value, prayerId: prayer.id, author: userName}),
+        addComment({
+          body: value,
+          prayerId: prayer.id,
+          author: userName,
+          created: 'sdfsdf',
+        }),
       );
       setValue('');
     }
@@ -55,7 +60,7 @@ const Details: React.FC<DetailsProps> = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <HeaderDetails navigation={navigation} text={prayer.text} />
+      <HeaderDetails navigation={navigation} text={prayer.title} />
       <ScrollView>
         <LastPrayed>
           <RectangleIcon />
@@ -88,8 +93,11 @@ const Details: React.FC<DetailsProps> = ({route, navigation}) => {
         <View style={{flexDirection: 'row', marginHorizontal: 15}}>
           <View>
             <FlatList
-              keyExtractor={(item: any) => item.id}
-              data={[{name: 'Биба'}, {name: 'Боба'}]}
+              keyExtractor={item => item.id}
+              data={[
+                {name: 'Биба', id: '2342'},
+                {name: 'Боба', id: '212312'},
+              ]}
               horizontal={true}
               renderItem={({item}) => (
                 <Member>
@@ -136,8 +144,7 @@ const DataPrayed = styled.View`
   border-bottom-color: #e5e5e5;
   border-bottom-width: 1px;
 `;
-type PrayedBlockProps = {};
-const PrayedBlock = styled.View<PrayedBlockProps>`
+const PrayedBlock = styled.View`
   width: 50%;
   height: 108px;
   justify-content: center;
@@ -190,4 +197,4 @@ const MessageInput = styled.TextInput`
   height: 56px;
 `;
 
-export default Details;
+export default DetailsScreen;

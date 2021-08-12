@@ -2,12 +2,14 @@ import {Routes} from '../navigation/routes';
 
 export type Board = {
   id: string;
-  text: string;
+  title: string;
+  description: string;
+  userId: string;
 };
 export type Prayer = {
   id: string;
-  text: string;
-  boardId: string;
+  title: string;
+  columnId: string;
   checked: boolean;
   totalCountPrayed: number;
   myCountPrayed: number;
@@ -16,19 +18,20 @@ export type Prayer = {
 };
 export type Comment = {
   id: string;
-  text: string;
+  body: string;
   prayerId: string;
   author: string;
+  created: string;
 };
 export type UserName = {
   firstName: string;
 };
 export type NewBoard = {
-  text: string;
+  title: string;
 };
 export type NewPrayer = {
-  text: string;
-  boardId: string;
+  title: string;
+  columnId: string;
   checked: boolean;
   totalCountPrayed: number;
   myCountPrayed: number;
@@ -36,8 +39,9 @@ export type NewPrayer = {
   author: string;
 };
 export type NewComment = {
-  text: string;
+  body: string;
   prayerId: string;
+  created: string;
   author: string;
 };
 

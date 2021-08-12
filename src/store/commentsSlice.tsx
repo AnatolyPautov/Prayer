@@ -13,11 +13,18 @@ export const boardsSlice = createSlice({
   name: 'Comments',
   initialState,
   reducers: {
+    getComments(state, {payload}) {},
+    setComments(state, {payload}) {
+      const commentsData: Types.Comment[] = Object.values(payload);
+      state.comments = commentsData;
+      console.log(state.comments);
+    },
     addComment(state, {payload}: PayloadAction<Types.NewComment>) {
       const newComment = {
         id: Date.now().toString(),
-        text: payload.text,
+        body: payload.body,
         prayerId: payload.prayerId,
+        created: 'sdsads',
         author: payload.author,
       };
       state.comments.push(newComment);
@@ -30,6 +37,7 @@ export const boardsSlice = createSlice({
   },
 });
 
-export const {addComment, removeComment} = boardsSlice.actions;
+export const {addComment, removeComment, setComments, getComments} =
+  boardsSlice.actions;
 
 export default boardsSlice.reducer;

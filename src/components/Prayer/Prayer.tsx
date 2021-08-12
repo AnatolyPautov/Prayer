@@ -24,6 +24,7 @@ import {
   removePrayer,
 } from '../../store/prayersSlice';
 import {Routes} from '../../navigation/routes';
+import RectangleIcon from '../../icons/RectangleIcon';
 
 interface PrayerProps {
   prayer: Types.Prayer;
@@ -55,7 +56,9 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigation}) => {
         onPress={() => navigation.navigate(Routes.DetailsScreen, {prayer})}>
         <PrayerContainer>
           <PrayerBox>
+            <RectangleIcon />
             <CheckBox
+              style={{marginLeft: 15}}
               disabled={false}
               value={prayer.checked}
               onValueChange={newValue =>
@@ -65,9 +68,9 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigation}) => {
             <PrayerText
               numberOfLines={1}
               style={prayer.checked && {textDecorationLine: 'line-through'}}>
-              {prayer.text.length > 15
-                ? prayer.text.substring(0, 15) + '...'
-                : prayer.text}
+              {prayer.title.length > 15
+                ? prayer.title.substring(0, 15) + '...'
+                : prayer.title}
             </PrayerText>
           </PrayerBox>
           <PrayerBox>

@@ -13,11 +13,17 @@ export const boardsSlice = createSlice({
   name: 'Prayers',
   initialState,
   reducers: {
+    getPrayers(state, {payload}) {},
+    setPrayers(state, {payload}) {
+      const prayersData: Types.Prayer[] = Object.values(payload);
+      state.prayers = prayersData;
+      console.log(state.prayers);
+    },
     addPrayer(state, {payload}: PayloadAction<Types.NewPrayer>) {
       const newPrayer = {
         id: Date.now().toString(),
-        text: payload.text,
-        boardId: payload.boardId,
+        title: payload.title,
+        columnId: payload.columnId,
         checked: payload.checked,
         totalCountPrayed: payload.totalCountPrayed,
         myCountPrayed: payload.myCountPrayed,
@@ -51,7 +57,13 @@ export const boardsSlice = createSlice({
   },
 });
 
-export const {addPrayer, removePrayer, checkedPrayer, addPrayedCount} =
-  boardsSlice.actions;
+export const {
+  addPrayer,
+  removePrayer,
+  checkedPrayer,
+  addPrayedCount,
+  setPrayers,
+  getPrayers,
+} = boardsSlice.actions;
 
 export default boardsSlice.reducer;

@@ -19,7 +19,7 @@ interface LoginProps {
   navigation: StackNavigationProp<Types.RootStackParamList, Routes.LoginScreen>;
 }
 
-const Login: React.FC<LoginProps> = ({navigation}) => {
+const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
   const {setUserName, userName} = React.useContext(Context);
 
   const dispatch = useAppDispatch();
@@ -66,4 +66,4 @@ const LoginButton = styled.TouchableOpacity`
   border-radius: 10px;
 `;
 
-export default Login;
+export default LoginScreen;

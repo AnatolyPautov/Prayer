@@ -17,12 +17,13 @@ import {getBoards, useAppDispatch} from '../../store/store';
 import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {Routes} from '../../navigation/routes';
+import {userAPI} from '../../api/api';
 
 interface BoardProps {
   navigation: StackNavigationProp<Types.RootStackParamList, Routes.BoardScreen>;
 }
 
-const Board: React.FC<BoardProps> = ({navigation}) => {
+const BoardScreen: React.FC<BoardProps> = ({navigation}) => {
   const [value, setValue] = React.useState<string>('');
 
   const boards = useSelector(getBoards);
@@ -30,13 +31,12 @@ const Board: React.FC<BoardProps> = ({navigation}) => {
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(addBoard({text: value}));
+      dispatch(addBoard({title: value}));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');
     }
   };
-
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <BoardInput>
@@ -58,7 +58,7 @@ const Board: React.FC<BoardProps> = ({navigation}) => {
             onPress={() =>
               navigation.navigate(Routes.PrayersScreen, {board: item})
             }>
-            <BoardText>{item.text}</BoardText>
+            <BoardText>{item.title}</BoardText>
           </TouchableOpacity>
         )}
       />
@@ -93,4 +93,4 @@ const BoardText = styled.Text`
   padding: 20px 0 20px 15px;
 `;
 
-export default Board;
+export default BoardScreen;
