@@ -2,12 +2,18 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import * as Types from '../types/types';
 
 interface UserSliceState {
-  userName: string;
+  user: Types.User;
   isAuth: boolean;
 }
 
 const initialState: UserSliceState = {
-  userName: '',
+  user: {
+    name: '',
+    email: '',
+    password: '',
+    token: '',
+  },
+
   isAuth: false,
 };
 
@@ -15,13 +21,22 @@ export const userSlice = createSlice({
   name: 'User',
   initialState,
   reducers: {
-    setUser(state, {payload}) {
-      state.userName = payload;
-      state.isAuth = true;
+    signUpRequest(state, {payload}) {},
+    signUpSuccsecResponse(state, {payload}: any) {
+      return payload.token && {user: {...payload}, isAuth: true};
+    },
+    signInRequest(state, {payload}) {},
+    signInSuccsecRequest(state, {payload}: any) {
+      return payload.token && {user: {...payload}, isAuth: true};
     },
   },
 });
 
-export const {setUser} = userSlice.actions;
+export const {
+  signUpRequest,
+  signUpSuccsecResponse,
+  signInRequest,
+  signInSuccsecRequest,
+} = userSlice.actions;
 
 export default userSlice.reducer;

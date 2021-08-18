@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import MainStack from './src/navigation/navigate';
+import MainStack from './src/navigation/StackRoute';
+import AuthRoute from './src/navigation/AuthRoute';
 import Context from './context';
-import {useAppDispatch} from './src/store/store';
+import {getUser, useAppDispatch} from './src/store/store';
 import {getBoards} from './src/store/boardsSlice';
 import {getPrayers} from './src/store/prayersSlice';
 import {getComments} from './src/store/commentsSlice';
+import {useSelector} from 'react-redux';
 
 const App = () => {
   const [userName, setUserName] = React.useState<string>('');
@@ -17,9 +19,10 @@ const App = () => {
     dispatch(getComments({}));
   }, [dispatch]);
 
+  const user = useSelector(getUser);
   return (
     <Context.Provider value={{userName, setUserName}}>
-      <MainStack />
+      {!user.isAuth ? <AuthRoute /> : <MainStack />}
     </Context.Provider>
   );
 };

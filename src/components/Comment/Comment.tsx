@@ -11,7 +11,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Types from '../../types/types';
 import styled from 'styled-components/native';
 import {useAppDispatch} from '../../store/store';
-import {removeComment} from '../../store/commentsSlice';
+import {removeComment, removeCommentRequest} from '../../store/commentsSlice';
 
 interface CommentProps {
   comment: Types.Comment;
@@ -21,7 +21,8 @@ const Comment: React.FC<CommentProps> = ({comment}) => {
 
   const rightSwipe = () => {
     return (
-      <TouchableOpacity onPress={() => dispatch(removeComment(comment.id))}>
+      <TouchableOpacity
+        onPress={() => dispatch(removeCommentRequest(comment.id))}>
         <DeleteBox>
           <Text style={{color: 'white'}}>Delete</Text>
         </DeleteBox>

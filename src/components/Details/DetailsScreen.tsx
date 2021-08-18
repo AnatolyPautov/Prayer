@@ -2,11 +2,8 @@ import {RouteProp} from '@react-navigation/native';
 import React from 'react';
 import {
   FlatList,
-  StyleSheet,
   Text,
   View,
-  TextInput,
-  Alert,
   Button,
   ScrollView,
   useWindowDimensions,
@@ -16,11 +13,11 @@ import styled from 'styled-components/native';
 import Context from '../../../context';
 import MessageIcon from '../../icons/MessageIcon';
 import Plus from '../../icons/Plus';
-import {getComments, getCommentsById, useAppDispatch} from '../../store/store';
+import {getCommentsById, useAppDispatch} from '../../store/store';
 import Comment from '../Comment';
 import * as Types from '../../types/types';
 import {Routes} from '../../navigation/routes';
-import {addComment} from '../../store/commentsSlice';
+import {addComment, createComment} from '../../store/commentsSlice';
 import RectangleIcon from '../../icons/RectangleIcon';
 import HeaderDetails from '../../layouts/HeaderDetails';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -39,19 +36,15 @@ const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
 
   const {prayer} = route.params;
 
-  const {userName} = React.useContext(Context);
-
   const comments = useSelector(getCommentsById(prayer.id));
   const dispatch = useAppDispatch();
 
   const pressHandler = () => {
     if (value.trim()) {
       dispatch(
-        addComment({
+        createComment({
           body: value,
           prayerId: prayer.id,
-          author: userName,
-          created: 'sdfsdf',
         }),
       );
       setValue('');
@@ -76,16 +69,18 @@ const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
             <Text>Opened for 4 days</Text>
           </PrayedBlock>
           <PrayedBlock>
-            <DataPrayedTitle>{prayer.totalCountPrayed}</DataPrayedTitle>
+            <DataPrayedTitle>{/* {prayer.totalCountPrayed} */}</DataPrayedTitle>
             <Text>Times Prayed Total</Text>
           </PrayedBlock>
           <PrayedBlock
             style={{borderRightColor: '#e5e5e5', borderRightWidth: 1}}>
-            <DataPrayedTitle>{prayer.myCountPrayed}</DataPrayedTitle>
+            <DataPrayedTitle>{/* {prayer.myCountPrayed} */}</DataPrayedTitle>
             <Text>Times Prayed by Me</Text>
           </PrayedBlock>
           <PrayedBlock>
-            <DataPrayedTitle>{prayer.othersCountPrayed}</DataPrayedTitle>
+            <DataPrayedTitle>
+              {/* {prayer.othersCountPrayed} */}
+            </DataPrayedTitle>
             <Text>Times Prayed by Others</Text>
           </PrayedBlock>
         </DataPrayed>
@@ -113,21 +108,24 @@ const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
           </IconPlusContainer>
         </View>
         <Title>comments</Title>
-        {comments.map(item => {
-          return <Comment comment={item} key={item.id} />;
-        })}
-        <MessageContainer>
-          <IconMessageContainer>
-            <MessageIcon />
-          </IconMessageContainer>
-          <MessageInput
-            value={value}
-            placeholder="Add a comment..."
-            onChangeText={setValue}
-            onSubmitEditing={pressHandler}
-          />
-        </MessageContainer>
+        <FlatList
+          keyExtractor={(item, index) => 'key' + index}
+          data={comments}
+          renderItem={({item}) => <Comment comment={item} />}
+        />
       </ScrollView>
+
+      <MessageContainer>
+        <IconMessageContainer>
+          <MessageIcon />
+        </IconMessageContainer>
+        <MessageInput
+          value={value}
+          placeholder="Add a comment..."
+          onChangeText={setValue}
+          onSubmitEditing={pressHandler}
+        />
+      </MessageContainer>
     </View>
   );
 };

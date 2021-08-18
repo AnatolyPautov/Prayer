@@ -1,53 +1,56 @@
 import {Routes} from '../navigation/routes';
 
 export type Board = {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  userId: string;
+  user: number;
 };
 export type Prayer = {
-  id: string;
+  id: number;
   title: string;
-  columnId: string;
+  description: string;
   checked: boolean;
-  totalCountPrayed: number;
-  myCountPrayed: number;
-  othersCountPrayed: number;
-  author: string;
+  columnId: number;
+  commentsIds: number[];
 };
 export type Comment = {
-  id: string;
+  id: number;
   body: string;
-  prayerId: string;
+  prayerId: number;
   author: string;
   created: string;
 };
-export type UserName = {
-  firstName: string;
+export type User = {
+  email: string;
+  name: string;
+  password: string;
+  token: string;
 };
 export type NewBoard = {
   title: string;
 };
 export type NewPrayer = {
   title: string;
-  columnId: string;
+  columnId: number;
   checked: boolean;
-  totalCountPrayed: number;
-  myCountPrayed: number;
-  othersCountPrayed: number;
-  author: string;
-};
-export type NewComment = {
-  body: string;
-  prayerId: string;
-  created: string;
-  author: string;
+  description: string;
 };
 
 export type RootStackParamList = {
-  [Routes.LoginScreen]: undefined;
   [Routes.BoardScreen]: undefined;
-  [Routes.PrayersScreen]: {board: Board};
+  [Routes.PrayersHeader]: {board: Board};
   [Routes.DetailsScreen]: {prayer: Prayer};
+  [Routes.Subscribed]: {board: Board};
+  [Routes.PrayersScreen]: {board: Board};
+};
+
+export type AuthStackParamList = {
+  [Routes.LoginScreen]: undefined;
+  [Routes.RegistrationScreen]: undefined;
+};
+
+export type TabStackParam = {
+  [Routes.PrayersScreen]: {board: Board};
+  [Routes.Subscribed]: {board: Board};
 };

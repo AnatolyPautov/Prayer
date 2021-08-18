@@ -19,49 +19,45 @@ export const boardsSlice = createSlice({
       state.prayers = prayersData;
       console.log(state.prayers);
     },
-    addPrayer(state, {payload}: PayloadAction<Types.NewPrayer>) {
-      const newPrayer = {
-        id: Date.now().toString(),
-        title: payload.title,
-        columnId: payload.columnId,
-        checked: payload.checked,
-        totalCountPrayed: payload.totalCountPrayed,
-        myCountPrayed: payload.myCountPrayed,
-        othersCountPrayed: payload.othersCountPrayed,
-        author: payload.author,
-      };
-      state.prayers.push(newPrayer);
+    createPrayer(state, {payload}) {},
+    addPrayer(state, {payload}: PayloadAction<Types.Prayer>) {
+      state.prayers.push(payload);
     },
-    checkedPrayer(state, {payload}) {
-      state.prayers.map(prayer => {
-        if (prayer.id === payload.id) {
-          prayer.checked = payload.newValue;
-        }
-      });
-    },
-    removePrayer(state, {payload}: PayloadAction<string>) {
+    removePrayerRequest(state, {payload}) {},
+    removePrayer(state, {payload}: PayloadAction<number>) {
       state.prayers = [
         ...state.prayers.filter(prayer => prayer.id !== payload),
       ];
     },
-    addPrayedCount(state, {payload}) {
+    updatePrayerRequest(state, {payload}) {},
+    updatePrayer(state, {payload}: PayloadAction<Types.Prayer>) {
+      state.prayers.map(prayer => {
+        if (prayer.id === payload.id) {
+          prayer.checked = payload.checked;
+        }
+      });
+    },
+    /* addPrayedCount(state, {payload}: PayloadAction<Types.PrayedCount>) {
       state.prayers.map(prayer => {
         if (prayer.id === payload.id) {
           ++prayer.totalCountPrayed;
-          prayer.author === payload.userName
+          console.log(prayer.totalCountPrayed);
+          prayer.author === payload.author
             ? ++prayer.myCountPrayed
             : ++prayer.othersCountPrayed;
         }
       });
-    },
+    }, */
   },
 });
 
 export const {
+  createPrayer,
   addPrayer,
   removePrayer,
-  checkedPrayer,
-  addPrayedCount,
+  removePrayerRequest,
+  updatePrayerRequest,
+  updatePrayer,
   setPrayers,
   getPrayers,
 } = boardsSlice.actions;

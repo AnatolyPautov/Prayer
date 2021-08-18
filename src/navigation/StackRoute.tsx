@@ -3,39 +3,27 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {Text, Button, StyleSheet, View} from 'react-native';
-import PrayerIcon from '../icons/PrayerIcon';
 import {Routes} from './routes';
-import Login from '../components/Login';
 import Board from '../components/Board';
-import Prayers from '../components/Prayers';
+import PrayersHeader from '../components/PrayersHeader';
 import Details from '../components/Details';
 import * as Types from '../types/types';
 import {defaultOptions} from './options';
-import {useSelector} from 'react-redux';
-import {getUser} from '../store/store';
 
 const Stack = createStackNavigator<Types.RootStackParamList>();
 
 export default function Navigate() {
-  const user = useSelector(getUser);
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!user.isAuth && (
-          <Stack.Screen
-            name={Routes.LoginScreen}
-            component={Login}
-            options={defaultOptions}
-          />
-        )}
         <Stack.Screen
           name={Routes.BoardScreen}
           component={Board}
           options={defaultOptions}
         />
         <Stack.Screen
-          name={Routes.PrayersScreen}
-          component={Prayers}
+          name={Routes.PrayersHeader}
+          component={PrayersHeader}
           options={defaultOptions}
         />
         <Stack.Screen

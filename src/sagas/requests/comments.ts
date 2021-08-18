@@ -1,12 +1,16 @@
-import axios from 'axios';
+import Api from '../../api/Service';
 
-export function requestGetComments() {
-  return axios.request({
-    method: 'get',
-    url: 'https://prayer.herokuapp.com/comments',
-    headers: {
-      Authorization:
-        'Bearer 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8',
-    },
+export const requestGetComments = () => {
+  return Api.get('comments');
+};
+
+export const requestCreateComment = (data: any) => {
+  const {body} = data;
+  return Api.post(`prayers/${data.prayerId}/comments`, {
+    body,
   });
-}
+};
+
+export const requestDeleteComment = (data: number) => {
+  return Api.delete(`comments/${data}`);
+};

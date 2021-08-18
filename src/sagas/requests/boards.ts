@@ -1,12 +1,10 @@
-import axios from 'axios';
+import Api from '../../api/Service';
+import * as Types from '../../types/types';
 
-export function requestGetBoards() {
-  return axios.request({
-    method: 'get',
-    url: 'https://prayer.herokuapp.com/columns',
-    headers: {
-      Authorization:
-        'Bearer 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8',
-    },
-  });
-}
+export const requestGetBoards = () => {
+  return Api.get('columns');
+};
+
+export const requestCreateBoard = (data: Types.NewBoard) => {
+  return Api.post('columns', {...data});
+};

@@ -1,63 +1,43 @@
-import axios from 'axios';
-/* 
-class Service {
+import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+const baseUrl = 'https://prayer.herokuapp.com/';
+const token =
+  '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8';
+
+class Api {
+  private api: AxiosInstance;
+
   constructor() {
-    let service = axios.create({
+    this.api = axios.create({
+      baseURL: baseUrl,
       headers: {
-        Authorization:
-          'Bearer 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8',
+        Authorization: `Bearer ${token}`,
       },
     });
-    service.interceptors.response.use(this.handleSuccess, this.handleError);
-    this.service = service;
+
+    /*  this.api.interceptors.request.use(config => {
+      const token = user.user.token;
+      if (token !== null) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    }); */
   }
 
-  handleSuccess(response) {
-    return response;
+  async post(url: string, data?: any) {
+    return this.api.post(url, data);
   }
 
-  handleError = (error) => {
-    switch (error.response.status) {
-      case 401:
-        this.redirectTo(document, '/')
-        break;
-      case 404:
-        this.redirectTo(document, '/404')
-        break;
-      default:
-        this.redirectTo(document, '/500')
-        break;
-    }
-    return Promise.reject(error)
+  async get(url: string) {
+    return this.api.get(url);
   }
 
-  redirectTo = (document, path) => {
-    document.location = path
-  }
-  
-  get(path, callback) {
-    return this.service.get(path).then(
-      (response) => callback(response.status, response.data)
-    );
+  async put(url: string, data?: any) {
+    return this.api.put(url, data);
   }
 
-  patch(path, payload, callback) {
-    return this.service.request({
-      method: 'PATCH',
-      url: path,
-      responseType: 'json',
-      data: payload
-    }).then((response) => callback(response.status, response.data));
-  }
-
-  post(path, payload, callback) {
-    return this.service.request({
-      method: 'POST',
-      url: path,
-      responseType: 'json',
-      data: payload
-    }).then((response) => callback(response.status, response.data));
+  async delete(url: string, data?: any) {
+    return this.api.delete(url, data);
   }
 }
 
-export default new Service;  */
+export default new Api();

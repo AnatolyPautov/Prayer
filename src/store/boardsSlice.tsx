@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {userAPI} from '../api/api';
 import * as Types from '../types/types';
 
 interface BoardsSliceState {
@@ -20,18 +19,23 @@ export const boardsSlice = createSlice({
       state.boards = boardsData;
       console.log(boardsData);
     },
-    addBoard(state, {payload}: PayloadAction<Types.NewBoard>) {
+    createBoard(state, {payload}) {},
+    addBoard(state, {payload}: PayloadAction<Types.Board>) {
+      state.boards.push(payload);
+    },
+    /* addBoard(state, {payload}: PayloadAction<Types.NewBoard>) {
       const newBoard = {
-        id: Date.now().toString(),
+        id: Date.now(),
         title: payload.title,
         description: 'aboba',
-        userId: '10',
+        userId: 10,
       };
       state.boards.push(newBoard);
-    },
+    }, */
   },
 });
 
-export const {addBoard, setBoards, getBoards} = boardsSlice.actions;
+export const {addBoard, setBoards, getBoards, createBoard} =
+  boardsSlice.actions;
 
 export default boardsSlice.reducer;

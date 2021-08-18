@@ -28,22 +28,22 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const getBoards = (state: RootState) => state.boards.boards;
 
 export const getPrayers = (state: RootState) => state.prayers.prayers;
-export const getPrayersById = (columnId: string) => (state: RootState) => {
+export const getPrayersById = (columnId: number) => (state: RootState) => {
   return state.prayers.prayers.filter(prayer => prayer.columnId === columnId);
 };
-export const getPrayersChecked = (columnId: string) => (state: RootState) => {
+export const getPrayersChecked = (columnId: number) => (state: RootState) => {
   return state.prayers.prayers.filter(
     prayer => prayer.columnId === columnId && prayer.checked === true,
   );
 };
-export const getPrayersUnchecked = (columnId: string) => (state: RootState) => {
+export const getPrayersUnchecked = (columnId: number) => (state: RootState) => {
   return state.prayers.prayers.filter(
     prayer => prayer.columnId === columnId && prayer.checked === false,
   );
 };
 
 export const getComments = (state: RootState) => state.comments.comments;
-export const getCommentsById = (prayerId: string) => (state: RootState) => {
+export const getCommentsById = (prayerId: number) => (state: RootState) => {
   return state.comments.comments.filter(
     comment => comment.prayerId === prayerId,
   );

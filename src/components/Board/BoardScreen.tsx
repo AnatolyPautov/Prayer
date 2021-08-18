@@ -12,12 +12,11 @@ import {
 import {useSelector} from 'react-redux';
 import Plus from '../../icons/Plus';
 import styled from 'styled-components/native';
-import {addBoard} from '../../store/boardsSlice';
+import {addBoard, createBoard} from '../../store/boardsSlice';
 import {getBoards, useAppDispatch} from '../../store/store';
 import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {Routes} from '../../navigation/routes';
-import {userAPI} from '../../api/api';
 
 interface BoardProps {
   navigation: StackNavigationProp<Types.RootStackParamList, Routes.BoardScreen>;
@@ -31,7 +30,7 @@ const BoardScreen: React.FC<BoardProps> = ({navigation}) => {
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(addBoard({title: value}));
+      dispatch(createBoard({title: value, description: 'test desc'}));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');
@@ -51,12 +50,12 @@ const BoardScreen: React.FC<BoardProps> = ({navigation}) => {
         </PlusIcon>
       </BoardInput>
       <FlatList
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => 'key' + index}
         data={boards}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate(Routes.PrayersScreen, {board: item})
+              navigation.navigate(Routes.PrayersHeader, {board: item})
             }>
             <BoardText>{item.title}</BoardText>
           </TouchableOpacity>

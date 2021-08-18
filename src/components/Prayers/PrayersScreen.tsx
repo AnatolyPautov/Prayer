@@ -1,33 +1,19 @@
 import React from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Button,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {Text, Alert, ScrollView} from 'react-native';
 import Plus from '../../icons/Plus';
 import Prayer from '../Prayer';
 import {useSelector} from 'react-redux';
 import {
-  getPrayers,
-  getPrayersById,
   getPrayersChecked,
   getPrayersUnchecked,
   useAppDispatch,
 } from '../../store/store';
-import SettingIcon from '../../icons/SettingIcon';
 import styled from 'styled-components/native';
-import Context from '../../../context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../navigation/routes';
-import {addPrayer} from '../../store/prayersSlice';
+import {createPrayer} from '../../store/prayersSlice';
 
 interface PrayerProps {
   navigation: StackNavigationProp<
@@ -42,8 +28,6 @@ const PrayersScreen: React.FC<PrayerProps> = ({navigation, route}) => {
 
   const {board} = route.params;
 
-  const {userName} = React.useContext(Context);
-
   const checkedPrayers = useSelector(getPrayersChecked(board.id));
   const unCheckedPrayers = useSelector(getPrayersUnchecked(board.id));
   const dispatch = useAppDispatch();
@@ -51,14 +35,11 @@ const PrayersScreen: React.FC<PrayerProps> = ({navigation, route}) => {
   const pressHandler = () => {
     if (value.trim()) {
       dispatch(
-        addPrayer({
+        createPrayer({
           title: value,
           columnId: board.id,
+          description: 'test desc',
           checked: false,
-          totalCountPrayed: 0,
-          myCountPrayed: 0,
-          othersCountPrayed: 0,
-          author: userName,
         }),
       );
       setValue('');
@@ -69,12 +50,6 @@ const PrayersScreen: React.FC<PrayerProps> = ({navigation, route}) => {
 
   return (
     <Container>
-      <Header>
-        <Text style={{fontSize: 17}}>{board.title}</Text>
-        <Setting>
-          <SettingIcon />
-        </Setting>
-      </Header>
       <InputBlock>
         <PlusContainer>
           <Plus onPress={pressHandler} />
