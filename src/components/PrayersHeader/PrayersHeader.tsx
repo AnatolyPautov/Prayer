@@ -2,20 +2,15 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import SettingIcon from '../../icons/SettingIcon';
 import styled from 'styled-components/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../navigation/routes';
 import {TabRoute} from '../../navigation/TabRoute';
 
 interface PrayerProps {
-  navigation: StackNavigationProp<
-    Types.RootStackParamList,
-    Routes.PrayersHeader
-  >;
   route: RouteProp<Types.RootStackParamList, Routes.PrayersHeader>;
 }
-const PrayersHeader: React.FC<PrayerProps> = ({navigation, route}) => {
+const PrayersHeader: React.FC<PrayerProps> = ({route}) => {
   const {board} = route.params;
 
   return (

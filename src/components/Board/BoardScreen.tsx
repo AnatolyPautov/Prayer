@@ -1,8 +1,6 @@
 import React from 'react';
 import {
   FlatList,
-  StyleSheet,
-  Text,
   View,
   TextInput,
   Alert,

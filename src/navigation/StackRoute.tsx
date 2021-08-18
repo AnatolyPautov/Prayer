@@ -2,7 +2,6 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {Text, Button, StyleSheet, View} from 'react-native';
 import {Routes} from './routes';
 import Board from '../components/Board';
 import PrayersHeader from '../components/PrayersHeader';
@@ -35,9 +34,3 @@ export default function Navigate() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  headerBack: {
-    display: 'none',
-  },
-});

@@ -27,14 +27,36 @@ export type User = {
   password: string;
   token: string;
 };
+export type Login = {
+  email: string;
+  name: string;
+  password: string;
+  token: string;
+};
+export type Registration = {
+  email: string;
+  name: string;
+  password: string;
+};
 export type NewBoard = {
   title: string;
+  description: string;
 };
 export type NewPrayer = {
   title: string;
   columnId: number;
   checked: boolean;
   description: string;
+};
+export type UpdatePrayer = {
+  id: string;
+  title: string;
+  checked: boolean;
+  description: string;
+};
+export type NewComment = {
+  body: string;
+  prayerId: number;
 };
 
 export type RootStackParamList = {

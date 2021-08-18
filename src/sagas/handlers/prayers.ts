@@ -12,8 +12,10 @@ import {
   requestDeletePrayer,
   requestGetPrayers,
 } from '../requests/prayers';
+import * as Types from '../../types/types';
+import {PayloadAction} from '@reduxjs/toolkit';
 
-export function* handleGetPrayers({payload}: any): SagaIterator {
+export function* handleGetPrayers(): SagaIterator {
   try {
     const response = yield call(requestGetPrayers);
     const {data} = response;
@@ -22,7 +24,9 @@ export function* handleGetPrayers({payload}: any): SagaIterator {
     console.log(e);
   }
 }
-export function* handleCreatePrayer({payload}: any): SagaIterator {
+export function* handleCreatePrayer({
+  payload,
+}: PayloadAction<Types.NewPrayer>): SagaIterator {
   try {
     const response = yield call(requestCreatePrayer, payload);
     const data = response.data;
@@ -31,7 +35,9 @@ export function* handleCreatePrayer({payload}: any): SagaIterator {
     console.log(e);
   }
 }
-export function* handleDeletePrayer({payload}: any): SagaIterator {
+export function* handleDeletePrayer({
+  payload,
+}: PayloadAction<number>): SagaIterator {
   try {
     yield call(requestDeletePrayer, payload);
     yield put(removePrayer(payload));
@@ -39,7 +45,9 @@ export function* handleDeletePrayer({payload}: any): SagaIterator {
     console.log(e);
   }
 }
-export function* handleUpdatePrayer({payload}: any): SagaIterator {
+export function* handleUpdatePrayer({
+  payload,
+}: PayloadAction<Types.UpdatePrayer>): SagaIterator {
   try {
     const response = yield call(requestUpdatePrayer, payload);
     const data = response.data;

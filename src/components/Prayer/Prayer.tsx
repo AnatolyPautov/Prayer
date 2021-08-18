@@ -1,16 +1,13 @@
 import React from 'react';
 import {
-  FlatList,
-  StyleSheet,
-  Text,
   View,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Text,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import {getComments, getCommentsById, useAppDispatch} from '../../store/store';
+import {getCommentsById, useAppDispatch} from '../../store/store';
 import styled from 'styled-components/native';
 import PrayerIcon from '../../icons/PrayerIcon';
 import UserIcon from '../../icons/UserIcon';

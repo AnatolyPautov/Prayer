@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TextInput,
-  Button,
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';

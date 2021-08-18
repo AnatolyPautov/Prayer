@@ -1,17 +1,10 @@
 import React from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Types from '../../types/types';
 import styled from 'styled-components/native';
 import {useAppDispatch} from '../../store/store';
-import {removeComment, removeCommentRequest} from '../../store/commentsSlice';
+import {removeCommentRequest} from '../../store/commentsSlice';
 
 interface CommentProps {
   comment: Types.Comment;

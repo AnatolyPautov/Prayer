@@ -1,23 +1,15 @@
 import {RouteProp} from '@react-navigation/native';
 import React from 'react';
-import {
-  FlatList,
-  Text,
-  View,
-  Button,
-  ScrollView,
-  useWindowDimensions,
-} from 'react-native';
+import {FlatList, Text, View, Button, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
-import Context from '../../../context';
 import MessageIcon from '../../icons/MessageIcon';
 import Plus from '../../icons/Plus';
 import {getCommentsById, useAppDispatch} from '../../store/store';
 import Comment from '../Comment';
 import * as Types from '../../types/types';
 import {Routes} from '../../navigation/routes';
-import {addComment, createComment} from '../../store/commentsSlice';
+import {createComment} from '../../store/commentsSlice';
 import RectangleIcon from '../../icons/RectangleIcon';
 import HeaderDetails from '../../layouts/HeaderDetails';
 import {StackNavigationProp} from '@react-navigation/stack';

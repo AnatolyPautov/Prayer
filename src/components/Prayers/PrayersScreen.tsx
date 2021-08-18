@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Alert, ScrollView} from 'react-native';
+import {Alert, ScrollView} from 'react-native';
 import Plus from '../../icons/Plus';
 import Prayer from '../Prayer';
 import {useSelector} from 'react-redux';
@@ -89,11 +89,6 @@ const Container = styled.View`
   flex: 1;
   background: white;
 `;
-const Header = styled.View`
-  padding: 22px 0;
-  justify-content: center;
-  align-items: center;
-`;
 const InputBlock = styled.View`
   flex-direction: row;
   border-style: solid;
@@ -133,13 +128,6 @@ const ButtonText = styled.Text`
   color: white;
   text-transform: uppercase;
   text-align: center;
-`;
-const Setting = styled.View`
-  position: absolute;
-  top: 100%;
-  right: 15px;
-  width: 24px;
-  height: 24px;
 `;
 const PlusContainer = styled.View`
   align-items: center;

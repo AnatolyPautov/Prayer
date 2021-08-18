@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  Button,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import {Text, ActivityIndicator, View} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
@@ -48,13 +41,15 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
             <LoginBlock>
               <Field
                 name="email"
-                render={({input}) => {
+                render={({input, meta}) => {
                   return (
-                    <LoginInput
-                      placeholder="Write your email"
-                      value={input.value}
-                      onChangeText={input.onChange}
-                    />
+                    <View>
+                      <LoginInput
+                        placeholder="Write your email"
+                        value={input.value}
+                        onChangeText={input.onChange}
+                      />
+                    </View>
                   );
                 }}
               />

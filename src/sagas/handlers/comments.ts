@@ -10,8 +10,10 @@ import {
   requestDeleteComment,
   requestGetComments,
 } from '../requests/comments';
+import * as Types from '../../types/types';
+import {PayloadAction} from '@reduxjs/toolkit';
 
-export function* handleGetComments({payload}: any): SagaIterator {
+export function* handleGetComments(): SagaIterator {
   try {
     const response = yield call(requestGetComments);
     const {data} = response;
@@ -21,7 +23,9 @@ export function* handleGetComments({payload}: any): SagaIterator {
   }
 }
 
-export function* handleCreateComment({payload}: any): SagaIterator {
+export function* handleCreateComment({
+  payload,
+}: PayloadAction<Types.NewComment>): SagaIterator {
   try {
     const response = yield call(requestCreateComment, payload);
     const data = response.data;
@@ -31,7 +35,9 @@ export function* handleCreateComment({payload}: any): SagaIterator {
   }
 }
 
-export function* handleDeleteComment({payload}: any): SagaIterator {
+export function* handleDeleteComment({
+  payload,
+}: PayloadAction<number>): SagaIterator {
   try {
     yield call(requestDeleteComment, payload);
     yield put(removeComment(payload));

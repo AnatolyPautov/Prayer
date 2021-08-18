@@ -1,6 +1,5 @@
 import React from 'react';
-import {Text, Alert, ScrollView} from 'react-native';
-import Prayer from '../Prayer';
+import {Text, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import {getPrayersChecked, getPrayersUnchecked} from '../../store/store';
 import styled from 'styled-components/native';

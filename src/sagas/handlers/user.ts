@@ -6,8 +6,11 @@ import {
   signInSuccsecRequest,
   signUpSuccsecResponse,
 } from '../../store/userSlice';
+import {PayloadAction} from '@reduxjs/toolkit';
 
-export function* signUpRequestHandler({payload}: any): SagaIterator {
+export function* signUpRequestHandler({
+  payload,
+}: PayloadAction<Types.Registration>): SagaIterator {
   try {
     const {data} = yield call(signUp, {...payload});
     yield put(signUpSuccsecResponse({...data}));
@@ -15,7 +18,9 @@ export function* signUpRequestHandler({payload}: any): SagaIterator {
     console.log(e);
   }
 }
-export function* signInRequestHandler({payload}: any): SagaIterator {
+export function* signInRequestHandler({
+  payload,
+}: PayloadAction<Types.Login>): SagaIterator {
   try {
     const {data} = yield call(signIn, {...payload});
     yield put(signInSuccsecRequest({...data}));

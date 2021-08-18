@@ -17,7 +17,7 @@ export const requestDeletePrayer = (data: number) => {
   return Api.delete(`prayers/${data}`);
 };
 
-export const requestUpdatePrayer = (data: any) => {
+export const requestUpdatePrayer = (data: Types.UpdatePrayer) => {
   const {title, description, checked} = data;
   return Api.put(`prayers/${data.id}`, {title, description, checked});
 };

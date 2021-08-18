@@ -3,8 +3,9 @@ import {addBoard, setBoards} from '../../store/boardsSlice';
 import {requestCreateBoard, requestGetBoards} from '../requests/boards';
 import * as Types from '../../types/types';
 import {SagaIterator} from 'redux-saga';
+import {PayloadAction} from '@reduxjs/toolkit';
 
-export function* handleGetBoards({payload}: any): SagaIterator {
+export function* handleGetBoards(): SagaIterator {
   try {
     const response = yield call(requestGetBoards);
     const {data} = response;
@@ -13,7 +14,9 @@ export function* handleGetBoards({payload}: any): SagaIterator {
     console.log(e);
   }
 }
-export function* handleCreateBoard({payload}: any): SagaIterator {
+export function* handleCreateBoard({
+  payload,
+}: PayloadAction<Types.NewBoard>): SagaIterator {
   try {
     const response = yield call(requestCreateBoard, payload);
     const data = response.data;
