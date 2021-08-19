@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Types from '../../types/types';
 import styled from 'styled-components/native';
@@ -28,7 +28,12 @@ const Comment: React.FC<CommentProps> = ({comment}) => {
       <Container>
         <Avatar></Avatar>
         <View>
-          <Text>{comment.author}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontSize: 17, lineHeight: 20, marginRight: 6}}>
+              {comment.userId}
+            </Text>
+            <Text style={{color: '#9C9C9C'}}>2 days ago</Text>
+          </View>
           <Text>{comment.body}</Text>
         </View>
       </Container>

@@ -1,6 +1,6 @@
 import {RouteProp} from '@react-navigation/native';
 import React from 'react';
-import {FlatList, Text, View, Button, ScrollView} from 'react-native';
+import {FlatList, Text, View, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import MessageIcon from '../../icons/MessageIcon';
@@ -12,20 +12,15 @@ import {Routes} from '../../navigation/routes';
 import {createComment} from '../../store/commentsSlice';
 import RectangleIcon from '../../icons/RectangleIcon';
 import HeaderDetails from '../../layouts/HeaderDetails';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {getCurrentDate} from '../../utils/getCurrentDate';
 
 interface DetailsProps {
   route: RouteProp<Types.RootStackParamList, Routes.DetailsScreen>;
-  navigation: StackNavigationProp<
-    Types.RootStackParamList,
-    Routes.DetailsScreen
-  >;
 }
-const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
+const DetailsScreen: React.FC<DetailsProps> = ({route}) => {
   const [value, setValue] = React.useState<string>('');
 
-  let date = new Date();
-
+  let date = getCurrentDate();
   const {prayer} = route.params;
 
   const comments = useSelector(getCommentsById(prayer.id));
@@ -45,7 +40,7 @@ const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <HeaderDetails navigation={navigation} text={prayer.title} />
+      <HeaderDetails text={prayer.title} />
       <ScrollView>
         <LastPrayed>
           <RectangleIcon />
@@ -55,24 +50,22 @@ const DetailsScreen: React.FC<DetailsProps> = ({route, navigation}) => {
           <PrayedBlock
             style={{borderRightColor: '#e5e5e5', borderRightWidth: 1}}>
             <DataPrayedTitle style={{fontSize: 22, lineHeight: 26}}>
-              July 25 {date.getFullYear()}
+              {date}
             </DataPrayedTitle>
             <Text>Date Added</Text>
-            <Text>Opened for 4 days</Text>
+            <Text style={{color: '#72A8BC'}}>Opened for 4 days</Text>
           </PrayedBlock>
           <PrayedBlock>
-            <DataPrayedTitle>{/* {prayer.totalCountPrayed} */}</DataPrayedTitle>
+            <DataPrayedTitle>123</DataPrayedTitle>
             <Text>Times Prayed Total</Text>
           </PrayedBlock>
           <PrayedBlock
             style={{borderRightColor: '#e5e5e5', borderRightWidth: 1}}>
-            <DataPrayedTitle>{/* {prayer.myCountPrayed} */}</DataPrayedTitle>
+            <DataPrayedTitle>60</DataPrayedTitle>
             <Text>Times Prayed by Me</Text>
           </PrayedBlock>
           <PrayedBlock>
-            <DataPrayedTitle>
-              {/* {prayer.othersCountPrayed} */}
-            </DataPrayedTitle>
+            <DataPrayedTitle>63</DataPrayedTitle>
             <Text>Times Prayed by Others</Text>
           </PrayedBlock>
         </DataPrayed>

@@ -13,7 +13,7 @@ export const boardsSlice = createSlice({
   name: 'Comments',
   initialState,
   reducers: {
-    getComments(state, {payload}) {},
+    getCommentsRequest(state, {payload}) {},
     setComments(state, {payload}) {
       const commentsData: Types.Comment[] = Object.values(payload);
       state.comments = commentsData;
@@ -38,7 +38,7 @@ export const {
   removeCommentRequest,
   removeComment,
   setComments,
-  getComments,
+  getCommentsRequest,
 } = boardsSlice.actions;
 
 export default boardsSlice.reducer;

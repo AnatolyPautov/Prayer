@@ -3,6 +3,7 @@ import {call, put} from 'redux-saga/effects';
 import * as Types from '../../types/types';
 import {SagaIterator} from 'redux-saga';
 import {
+  requestFailed,
   signInSuccsecRequest,
   signUpSuccsecResponse,
 } from '../../store/userSlice';
@@ -12,7 +13,11 @@ export function* signUpRequestHandler({
   payload,
 }: PayloadAction<Types.Registration>): SagaIterator {
   try {
-    const {data} = yield call(signUp, {...payload});
+    const {data, ...responseInfo} = yield call(signUp, {...payload});
+    if (responseInfo.status !== 200 && data.message) {
+      yield put(requestFailed(data.message));
+      return;
+    }
     yield put(signUpSuccsecResponse({...data}));
   } catch (e) {
     console.log(e);
@@ -22,7 +27,11 @@ export function* signInRequestHandler({
   payload,
 }: PayloadAction<Types.Login>): SagaIterator {
   try {
-    const {data} = yield call(signIn, {...payload});
+    const {data, ...responseInfo} = yield call(signIn, {...payload});
+    if (responseInfo.status !== 200 && data.message) {
+      yield put(requestFailed(data.message));
+      return;
+    }
     yield put(signInSuccsecRequest({...data}));
   } catch (e) {
     console.log(e);

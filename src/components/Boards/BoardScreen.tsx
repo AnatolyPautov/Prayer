@@ -1,30 +1,28 @@
 import React from 'react';
-import {
-  FlatList,
-  View,
-  TextInput,
-  Alert,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import {FlatList, View, Alert} from 'react-native';
 import {useSelector} from 'react-redux';
 import Plus from '../../icons/Plus';
 import styled from 'styled-components/native';
-import {addBoard, createBoard} from '../../store/boardsSlice';
+import {createBoard, getBoardsRequest} from '../../store/boardsSlice';
 import {getBoards, useAppDispatch} from '../../store/store';
-import {StackNavigationProp} from '@react-navigation/stack';
-import * as Types from '../../types/types';
-import {Routes} from '../../navigation/routes';
+import {getPrayersRequest} from '../../store/prayersSlice';
+import {getCommentsRequest} from '../../store/commentsSlice';
+import BoardItem from '../BoardItem';
 
-interface BoardProps {
-  navigation: StackNavigationProp<Types.RootStackParamList, Routes.BoardScreen>;
-}
+interface BoardProps {}
 
-const BoardScreen: React.FC<BoardProps> = ({navigation}) => {
+const BoardScreen: React.FC<BoardProps> = ({}) => {
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(getBoardsRequest({}));
+    dispatch(getPrayersRequest({}));
+    dispatch(getCommentsRequest({}));
+  }, [dispatch]);
+
   const [value, setValue] = React.useState<string>('');
 
   const boards = useSelector(getBoards);
-  const dispatch = useAppDispatch();
 
   const pressHandler = () => {
     if (value.trim()) {
@@ -50,14 +48,7 @@ const BoardScreen: React.FC<BoardProps> = ({navigation}) => {
       <FlatList
         keyExtractor={(item, index) => 'key' + index}
         data={boards}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(Routes.PrayersHeader, {board: item})
-            }>
-            <BoardText>{item.title}</BoardText>
-          </TouchableOpacity>
-        )}
+        renderItem={({item}) => <BoardItem board={item} />}
       />
     </View>
   );
@@ -80,14 +71,6 @@ const PlusIcon = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-`;
-const BoardText = styled.Text`
-  margin: 10px 15px 0;
-  border-style: solid;
-  border-color: #e5e5e5;
-  border-width: 1px;
-  border-radius: 4px;
-  padding: 20px 0 20px 15px;
 `;
 
 export default BoardScreen;

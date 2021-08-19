@@ -16,6 +16,7 @@ const store = configureStore({
     comments: commentsSlice,
     user: userSlice,
   },
+  devTools: true,
   middleware: [...getDefaultMiddleware({thunk: false}), sagaMiddleware],
 });
 sagaMiddleware.run(watcherSaga);

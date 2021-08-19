@@ -13,7 +13,7 @@ export const boardsSlice = createSlice({
   name: 'Prayers',
   initialState,
   reducers: {
-    getPrayers(state, {payload}) {},
+    getPrayersRequest(state, {payload}) {},
     setPrayers(state, {payload}) {
       const prayersData: Types.Prayer[] = Object.values(payload);
       state.prayers = prayersData;
@@ -59,7 +59,7 @@ export const {
   updatePrayerRequest,
   updatePrayer,
   setPrayers,
-  getPrayers,
+  getPrayersRequest,
 } = boardsSlice.actions;
 
 export default boardsSlice.reducer;

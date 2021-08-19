@@ -12,7 +12,6 @@ import styled from 'styled-components/native';
 import PrayerIcon from '../../icons/PrayerIcon';
 import UserIcon from '../../icons/UserIcon';
 import {useSelector} from 'react-redux';
-import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {
   updatePrayerRequest,
@@ -20,16 +19,19 @@ import {
 } from '../../store/prayersSlice';
 import {Routes} from '../../navigation/routes';
 import RectangleIcon from '../../icons/RectangleIcon';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface PrayerProps {
   prayer: Types.Prayer;
-  navigation: StackNavigationProp<
-    Types.RootStackParamList,
-    Routes.PrayersScreen
-  >;
 }
-const Prayer: React.FC<PrayerProps> = ({prayer, navigation}) => {
+const Prayer: React.FC<PrayerProps> = ({prayer}) => {
   const dispatch = useAppDispatch();
+
+  const navigation =
+    useNavigation<
+      StackNavigationProp<Types.RootStackParamList, Routes.PrayersScreen>
+    >();
 
   const comments = useSelector(getCommentsById(prayer.id));
 
@@ -53,6 +55,7 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigation}) => {
             <RectangleIcon />
             <CheckBox
               style={{marginLeft: 15}}
+              tintColors={{true: '#514D47', false: '514D47'}}
               disabled={false}
               value={prayer.checked}
               onValueChange={newValue =>
@@ -83,16 +86,10 @@ const Prayer: React.FC<PrayerProps> = ({prayer, navigation}) => {
                 </IconContainer>
               )}
             </View>
-            <TouchableOpacity
-            /* onPress={() =>
-                dispatch(addPrayedCount({id: prayer.id, author: userName}))
-              } */
-            >
+            <TouchableOpacity>
               <IconContainer>
                 <PrayerIcon color={'#72A8BC'} />
-                <NumberPrayers>
-                  {/*  {prayer.totalCountPrayed !== 0 && prayer.totalCountPrayed */}
-                </NumberPrayers>
+                <NumberPrayers>15</NumberPrayers>
               </IconContainer>
             </TouchableOpacity>
           </PrayerBox>
@@ -109,7 +106,7 @@ const PrayerContainer = styled.View`
   border-style: solid;
   border-bottom-width: 1px;
   border-color: #e5e5e5;
-  padding: 15px 0;
+  padding: 20px 0;
   background-color: white;
   margin: 0 15px;
 `;

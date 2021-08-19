@@ -1,20 +1,15 @@
-import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {Text, View} from 'react-native';
 import styled from 'styled-components/native';
 import BackIcon from '../icons/BackIcon';
 import PrayerIcon from '../icons/PrayerIcon';
-import {Routes} from '../navigation/routes';
-import * as Types from '../types/types';
 
 interface HeaderProps {
   text: string;
-  navigation: StackNavigationProp<
-    Types.RootStackParamList,
-    Routes.DetailsScreen
-  >;
 }
-const HeaderDetails: React.FC<HeaderProps> = ({text, navigation}) => {
+const HeaderDetails: React.FC<HeaderProps> = ({text}) => {
+  const navigation = useNavigation();
   return (
     <Header>
       <ButtonsContainer>

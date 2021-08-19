@@ -1,14 +1,16 @@
 import React from 'react';
-import {Text, ActivityIndicator, View} from 'react-native';
+import {Text, ActivityIndicator, View, Modal, Button} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
 import * as Types from '../../types/types';
 import {getUser, useAppDispatch} from '../../store/store';
-import {signInRequest} from '../../store/userSlice';
+import {cleanErrors, signInRequest} from '../../store/userSlice';
 import {useSelector} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Routes} from '../../navigation/routes';
+import ModalAuth from '../../modals/ModalAuth';
+import ModalIndicator from '../../modals/ModalIndicator';
 
 interface LoginProps {
   navigation: StackNavigationProp<Types.AuthStackParamList, Routes.LoginScreen>;
@@ -22,15 +24,7 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
   const onSubmitForm = (values: FormProps, form: FormApi<FormProps>) => {
     dispatch(signInRequest({email: values.email, password: values.password}));
     form.reset();
-    /*     console.log(user.user.token);
-    if (!user.user.token) {
-      Alert.alert('нееет');
-    } */
   };
-
-  if (user.isAuth === true) {
-    return <ActivityIndicator color="#0000ff" />;
-  }
 
   return (
     <Container>
@@ -69,7 +63,12 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
               <LoginButton
                 onPress={handleSubmit}
                 disabled={!values.password || !values.email}>
-                <Text>Sign in</Text>
+                <Text
+                  style={
+                    !values.password || !values.email ? {opacity: 0.3} : null
+                  }>
+                  Sign in
+                </Text>
               </LoginButton>
               <Link
                 onPress={() => navigation.navigate(Routes.RegistrationScreen)}>
@@ -81,6 +80,8 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
           );
         }}
       />
+      <ModalAuth />
+      {user.isFetching === true && <ModalIndicator />}
     </Container>
   );
 };
@@ -115,6 +116,17 @@ const LoginButton = styled.TouchableOpacity`
 const Link = styled.TouchableOpacity`
   padding: 20px;
   align-items: center;
+`;
+const ModalWrapper = styled.View`
+  justify-content: center;
+  background: #00000083;
+  flex: 1;
+`;
+const ModalBlock = styled.View`
+  background: #fff;
+  margin: 0 15px;
+  border-radius: 30px;
+  padding: 30px;
 `;
 
 export default LoginScreen;

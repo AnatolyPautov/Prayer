@@ -8,3 +8,7 @@ export const requestGetBoards = () => {
 export const requestCreateBoard = (data: Types.NewBoard) => {
   return Api.post('columns', {...data});
 };
+
+export const requestDeleteBoard = (data: number) => {
+  return Api.delete(`columns/${data}`);
+};

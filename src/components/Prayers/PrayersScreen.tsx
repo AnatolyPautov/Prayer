@@ -1,7 +1,7 @@
 import React from 'react';
-import {Alert, ScrollView} from 'react-native';
+import {Alert, ScrollView, StyleSheet, View} from 'react-native';
 import Plus from '../../icons/Plus';
-import Prayer from '../Prayer';
+import Prayer from '../PrayerItem';
 import {useSelector} from 'react-redux';
 import {
   getPrayersChecked,
@@ -9,20 +9,15 @@ import {
   useAppDispatch,
 } from '../../store/store';
 import styled from 'styled-components/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../navigation/routes';
 import {createPrayer} from '../../store/prayersSlice';
 
 interface PrayerProps {
-  navigation: StackNavigationProp<
-    Types.RootStackParamList,
-    Routes.PrayersScreen
-  >;
   route: RouteProp<Types.RootStackParamList, Routes.PrayersScreen>;
 }
-const PrayersScreen: React.FC<PrayerProps> = ({navigation, route}) => {
+const PrayersScreen: React.FC<PrayerProps> = ({route}) => {
   const [value, setValue] = React.useState<string>('');
   const [answers, setAnswers] = React.useState<boolean>(false);
 
@@ -62,24 +57,24 @@ const PrayersScreen: React.FC<PrayerProps> = ({navigation, route}) => {
         />
       </InputBlock>
       <ScrollView>
-        {unCheckedPrayers.map(item => {
-          return <Prayer key={item.id} navigation={navigation} prayer={item} />;
-        })}
-        {checkedPrayers.length > 0 && (
-          <ShowButtonContainer answers={answers}>
-            <ShowButton onPress={() => setAnswers(!answers)}>
-              <ButtonText>
-                {answers ? 'hide' : 'show'} Answered Prayers
-              </ButtonText>
-            </ShowButton>
-          </ShowButtonContainer>
-        )}
-        {answers &&
-          checkedPrayers.map(item => {
-            return (
-              <Prayer key={item.id} navigation={navigation} prayer={item} />
-            );
+        <View style={{paddingTop: 20, marginBottom: 200}}>
+          {unCheckedPrayers.map(item => {
+            return <Prayer key={item.id} prayer={item} />;
           })}
+          {checkedPrayers.length > 0 && (
+            <ShowButtonContainer answers={answers}>
+              <ShowButton onPress={() => setAnswers(!answers)}>
+                <ButtonText>
+                  {answers ? 'hide' : 'show'} Answered Prayers
+                </ButtonText>
+              </ShowButton>
+            </ShowButtonContainer>
+          )}
+          {answers &&
+            checkedPrayers.map(item => {
+              return <Prayer key={item.id} prayer={item} />;
+            })}
+        </View>
       </ScrollView>
     </Container>
   );

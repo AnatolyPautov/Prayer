@@ -15,7 +15,11 @@ export const TabRoute: React.FC<TabRouteProps> = ({board}) => {
   return (
     <Tab.Navigator
       initialRouteName={Routes.PrayersScreen}
-      screenOptions={{swipeEnabled: false}}>
+      screenOptions={{
+        swipeEnabled: false,
+        tabBarLabelStyle: {color: '#72A8BC'},
+        tabBarIndicatorStyle: {backgroundColor: '#72A8BC'},
+      }}>
       <Tab.Screen
         name={Routes.PrayersScreen}
         component={PrayersScreen}

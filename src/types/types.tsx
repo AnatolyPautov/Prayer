@@ -18,7 +18,7 @@ export type Comment = {
   id: number;
   body: string;
   prayerId: number;
-  author: string;
+  userId: number;
   created: string;
 };
 export type User = {

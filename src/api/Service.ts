@@ -1,7 +1,8 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import store from '../store/store';
 const baseUrl = 'https://prayer.herokuapp.com/';
-const token =
-  '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8';
+/* const token =
+  '473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8'; */
 
 class Api {
   private api: AxiosInstance;
@@ -10,17 +11,17 @@ class Api {
     this.api = axios.create({
       baseURL: baseUrl,
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
     });
 
-    /*  this.api.interceptors.request.use(config => {
-      const token = user.user.token;
+    this.api.interceptors.request.use(config => {
+      const token = store.getState().user.user.token;
       if (token !== null) {
         config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
-    }); */
+    });
   }
 
   async post(url: string, data?: any) {

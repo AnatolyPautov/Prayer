@@ -3,16 +3,15 @@ import {Text, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import {getPrayersChecked, getPrayersUnchecked} from '../../store/store';
 import styled from 'styled-components/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../navigation/routes';
+import Prayer from '../PrayerItem';
 
 interface SubscribedProps {
-  navigation: StackNavigationProp<Types.RootStackParamList, Routes.Subscribed>;
   route: RouteProp<Types.RootStackParamList, Routes.Subscribed>;
 }
-const Subscribed: React.FC<SubscribedProps> = ({navigation, route}) => {
+const Subscribed: React.FC<SubscribedProps> = ({route}) => {
   const [answers, setAnswers] = React.useState<boolean>(false);
 
   const {board} = route.params;
@@ -23,11 +22,7 @@ const Subscribed: React.FC<SubscribedProps> = ({navigation, route}) => {
     <Container>
       <ScrollView>
         {unCheckedPrayers.map(item => {
-          return (
-            <FakePrayer key={item.id}>
-              <Text>{item.title}</Text>
-            </FakePrayer>
-          );
+          return <Prayer key={item.id} prayer={item} />;
         })}
         {checkedPrayers.length > 0 && (
           <ShowButtonContainer answers={answers}>
@@ -40,11 +35,7 @@ const Subscribed: React.FC<SubscribedProps> = ({navigation, route}) => {
         )}
         {answers &&
           checkedPrayers.map(item => {
-            return (
-              <FakePrayer key={item.id}>
-                <Text>{item.title}</Text>
-              </FakePrayer>
-            );
+            return <Prayer key={item.id} prayer={item} />;
           })}
       </ScrollView>
     </Container>
@@ -80,17 +71,6 @@ const ButtonText = styled.Text`
   color: white;
   text-transform: uppercase;
   text-align: center;
-`;
-const FakePrayer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-style: solid;
-  border-bottom-width: 1px;
-  border-color: #e5e5e5;
-  padding: 15px 0;
-  background-color: white;
-  margin: 0 15px;
 `;
 
 export default Subscribed;

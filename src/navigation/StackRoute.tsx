@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {Routes} from './routes';
-import Board from '../components/Board';
+import Boards from '../components/Boards';
 import PrayersHeader from '../components/PrayersHeader';
 import Details from '../components/Details';
 import * as Types from '../types/types';
@@ -17,7 +17,7 @@ export default function Navigate() {
       <Stack.Navigator>
         <Stack.Screen
           name={Routes.BoardScreen}
-          component={Board}
+          component={Boards}
           options={defaultOptions}
         />
         <Stack.Screen

@@ -1,14 +1,16 @@
 import React from 'react';
-import {ActivityIndicator, Text} from 'react-native';
+import {ActivityIndicator, Button, Modal, Text, View} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
 import * as Types from '../../types/types';
 import {getUser, useAppDispatch} from '../../store/store';
-import {signUpRequest} from '../../store/userSlice';
+import {cleanErrors, signUpRequest} from '../../store/userSlice';
 import {useSelector} from 'react-redux';
 import {Routes} from '../../navigation/routes';
 import {StackNavigationProp} from '@react-navigation/stack';
+import ModalIndicator from '../../modals/ModalIndicator';
+import ModalAuth from '../../modals/ModalAuth';
 
 interface RegistrationProps {
   navigation: StackNavigationProp<
@@ -78,7 +80,12 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
               <LoginButton
                 onPress={handleSubmit}
                 disabled={!values.name || !values.email || !values.password}>
-                <Text>Sign up</Text>
+                <Text
+                  style={
+                    !values.password || !values.email ? {opacity: 0.3} : null
+                  }>
+                  Sign in
+                </Text>
               </LoginButton>
               <Link onPress={() => navigation.goBack()}>
                 <Text style={{color: '#a369ec'}}>Уже зарегистрированны?</Text>
@@ -87,6 +94,8 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
           );
         }}
       />
+      <ModalAuth />
+      {user.isFetching === true && <ModalIndicator />}
     </Container>
   );
 };
@@ -121,6 +130,17 @@ const LoginButton = styled.TouchableOpacity`
 const Link = styled.TouchableOpacity`
   padding: 20px;
   align-items: center;
+`;
+const ModalWrapper = styled.View`
+  justify-content: center;
+  background: #00000083;
+  flex: 1;
+`;
+const ModalBlock = styled.View`
+  background: #fff;
+  margin: 0 15px;
+  border-radius: 30px;
+  padding: 30px;
 `;
 
 export default RegistrationScreen;
