@@ -58,21 +58,3 @@ export type NewComment = {
   body: string;
   prayerId: number;
 };
-
-export type RootStackParamList = {
-  [Routes.BoardScreen]: undefined;
-  [Routes.PrayersHeader]: {board: Board};
-  [Routes.DetailsScreen]: {prayer: Prayer};
-  [Routes.Subscribed]: {board: Board};
-  [Routes.PrayersScreen]: {board: Board};
-};
-
-export type AuthStackParamList = {
-  [Routes.LoginScreen]: undefined;
-  [Routes.RegistrationScreen]: undefined;
-};
-
-export type TabStackParam = {
-  [Routes.PrayersScreen]: {board: Board};
-  [Routes.Subscribed]: {board: Board};
-};

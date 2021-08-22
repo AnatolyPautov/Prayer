@@ -3,19 +3,19 @@ import React from 'react';
 import {FlatList, Text, View, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
-import MessageIcon from '../../icons/MessageIcon';
-import Plus from '../../icons/Plus';
-import {getCommentsById, useAppDispatch} from '../../store/store';
-import Comment from '../Comment';
-import * as Types from '../../types/types';
-import {Routes} from '../../navigation/routes';
-import {createComment} from '../../store/commentsSlice';
-import RectangleIcon from '../../icons/RectangleIcon';
-import HeaderDetails from '../../layouts/HeaderDetails';
-import {getCurrentDate} from '../../utils/getCurrentDate';
+import MessageIcon from '../../../icons/MessageIcon';
+import Plus from '../../../icons/Plus';
+import {getCommentsById, useAppDispatch} from '../../../store/store';
+import Comment from '../../../components/Comment';
+import {Routes} from '../../../navigation/routes';
+import RectangleIcon from '../../../icons/RectangleIcon';
+import HeaderDetails from '../../../layouts/HeaderDetails';
+import {getCurrentDate} from '../../../utils/getCurrentDate';
+import {addCommentActionCreator} from '../../../store/sagasActions';
+import {RootStackParamList} from '../../../navigation/StackRoute';
 
 interface DetailsProps {
-  route: RouteProp<Types.RootStackParamList, Routes.DetailsScreen>;
+  route: RouteProp<RootStackParamList, Routes.DetailsScreen>;
 }
 const DetailsScreen: React.FC<DetailsProps> = ({route}) => {
   const [value, setValue] = React.useState<string>('');
@@ -28,12 +28,7 @@ const DetailsScreen: React.FC<DetailsProps> = ({route}) => {
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(
-        createComment({
-          body: value,
-          prayerId: prayer.id,
-        }),
-      );
+      dispatch(addCommentActionCreator(value, prayer.id));
       setValue('');
     }
   };

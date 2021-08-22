@@ -1,16 +1,16 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import SettingIcon from '../../icons/SettingIcon';
+import SettingIcon from '../../../icons/SettingIcon';
 import styled from 'styled-components/native';
-import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
-import {Routes} from '../../navigation/routes';
-import {TabRoute} from '../../navigation/TabRoute';
+import {Routes} from '../../../navigation/routes';
+import {TabRoute} from '../../../navigation/TabRoute';
+import {RootStackParamList} from '../../../navigation/StackRoute';
 
 interface PrayerProps {
-  route: RouteProp<Types.RootStackParamList, Routes.PrayersHeader>;
+  route: RouteProp<RootStackParamList, Routes.PrayersHeaderScreen>;
 }
-const PrayersHeader: React.FC<PrayerProps> = ({route}) => {
+const PrayersHeaderScreen: React.FC<PrayerProps> = ({route}) => {
   const {board} = route.params;
 
   return (
@@ -47,4 +47,4 @@ const Setting = styled.View`
   height: 24px;
 `;
 
-export default PrayersHeader;
+export default PrayersHeaderScreen;

@@ -1,19 +1,19 @@
 import React from 'react';
-import {Text, ActivityIndicator, View, Modal, Button} from 'react-native';
+import {Text, View} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
-import * as Types from '../../types/types';
-import {getUser, useAppDispatch} from '../../store/store';
-import {cleanErrors, signInRequest} from '../../store/userSlice';
+import {getUser, useAppDispatch} from '../../../store/store';
+import {signInRequest} from '../../../store/userSlice';
 import {useSelector} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Routes} from '../../navigation/routes';
-import ModalAuth from '../../modals/ModalAuth';
-import ModalIndicator from '../../modals/ModalIndicator';
+import {Routes} from '../../../navigation/routes';
+import ModalAuth from '../../../modals/ModalAuth';
+import ModalIndicator from '../../../modals/ModalIndicator';
+import {AuthStackParamList} from '../../../navigation/StackRoute';
 
 interface LoginProps {
-  navigation: StackNavigationProp<Types.AuthStackParamList, Routes.LoginScreen>;
+  navigation: StackNavigationProp<AuthStackParamList, Routes.LoginScreen>;
 }
 
 const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
@@ -116,17 +116,6 @@ const LoginButton = styled.TouchableOpacity`
 const Link = styled.TouchableOpacity`
   padding: 20px;
   align-items: center;
-`;
-const ModalWrapper = styled.View`
-  justify-content: center;
-  background: #00000083;
-  flex: 1;
-`;
-const ModalBlock = styled.View`
-  background: #fff;
-  margin: 0 15px;
-  border-radius: 30px;
-  padding: 30px;
 `;
 
 export default LoginScreen;

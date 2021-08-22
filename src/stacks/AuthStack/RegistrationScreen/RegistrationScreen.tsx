@@ -1,20 +1,20 @@
 import React from 'react';
-import {ActivityIndicator, Button, Modal, Text, View} from 'react-native';
+import {ActivityIndicator, Modal, Text, View} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
-import * as Types from '../../types/types';
-import {getUser, useAppDispatch} from '../../store/store';
-import {cleanErrors, signUpRequest} from '../../store/userSlice';
+import {getUser, useAppDispatch} from '../../../store/store';
+import {signUpRequest} from '../../../store/userSlice';
 import {useSelector} from 'react-redux';
-import {Routes} from '../../navigation/routes';
+import {Routes} from '../../../navigation/routes';
 import {StackNavigationProp} from '@react-navigation/stack';
-import ModalIndicator from '../../modals/ModalIndicator';
-import ModalAuth from '../../modals/ModalAuth';
+import ModalIndicator from '../../../modals/ModalIndicator';
+import ModalAuth from '../../../modals/ModalAuth';
+import {AuthStackParamList} from '../../../navigation/StackRoute';
 
 interface RegistrationProps {
   navigation: StackNavigationProp<
-    Types.AuthStackParamList,
+    AuthStackParamList,
     Routes.RegistrationScreen
   >;
 }
@@ -130,17 +130,6 @@ const LoginButton = styled.TouchableOpacity`
 const Link = styled.TouchableOpacity`
   padding: 20px;
   align-items: center;
-`;
-const ModalWrapper = styled.View`
-  justify-content: center;
-  background: #00000083;
-  flex: 1;
-`;
-const ModalBlock = styled.View`
-  background: #fff;
-  margin: 0 15px;
-  border-radius: 30px;
-  padding: 30px;
 `;
 
 export default RegistrationScreen;

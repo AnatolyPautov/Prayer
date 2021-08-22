@@ -5,7 +5,7 @@ interface UserSliceState {
   user: Types.User;
   isAuth: boolean;
   isFetching: boolean;
-  errors: string[];
+  errors: string;
 }
 
 const initialState: UserSliceState = {
@@ -17,7 +17,7 @@ const initialState: UserSliceState = {
   },
   isAuth: false,
   isFetching: false,
-  errors: [],
+  errors: '',
 };
 
 export const userSlice = createSlice({
@@ -41,11 +41,11 @@ export const userSlice = createSlice({
       );
     },
     requestFailed(state, {payload}: PayloadAction<string>) {
-      state.errors.push(payload);
+      state.errors = payload;
       state.isFetching = false;
     },
     cleanErrors(state) {
-      state.errors = [];
+      state.errors = '';
     },
   },
 });

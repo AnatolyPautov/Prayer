@@ -4,6 +4,6 @@ export enum Routes {
   BoardScreen = 'Board',
   PrayersScreen = 'Prayers',
   DetailsScreen = 'Details',
-  Subscribed = 'Subscribed',
-  PrayersHeader = 'PrayersHeader',
+  SubscribedScreen = 'Subscribed',
+  PrayersHeaderScreen = 'PrayersHeader',
 }

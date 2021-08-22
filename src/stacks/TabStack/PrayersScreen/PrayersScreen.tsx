@@ -1,21 +1,21 @@
 import React from 'react';
-import {Alert, ScrollView, StyleSheet, View} from 'react-native';
-import Plus from '../../icons/Plus';
-import Prayer from '../PrayerItem';
+import {Alert, ScrollView, View} from 'react-native';
+import Plus from '../../../icons/Plus';
+import Prayer from '../../../components/PrayerItem';
 import {useSelector} from 'react-redux';
 import {
   getPrayersChecked,
   getPrayersUnchecked,
   useAppDispatch,
-} from '../../store/store';
+} from '../../../store/store';
 import styled from 'styled-components/native';
-import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
-import {Routes} from '../../navigation/routes';
-import {createPrayer} from '../../store/prayersSlice';
+import {Routes} from '../../../navigation/routes';
+import {addPrayerActionCreator} from '../../../store/sagasActions';
+import {TabStackParam} from '../../../navigation/TabRoute';
 
 interface PrayerProps {
-  route: RouteProp<Types.RootStackParamList, Routes.PrayersScreen>;
+  route: RouteProp<TabStackParam, Routes.PrayersScreen>;
 }
 const PrayersScreen: React.FC<PrayerProps> = ({route}) => {
   const [value, setValue] = React.useState<string>('');
@@ -29,14 +29,7 @@ const PrayersScreen: React.FC<PrayerProps> = ({route}) => {
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(
-        createPrayer({
-          title: value,
-          columnId: board.id,
-          description: 'test desc',
-          checked: false,
-        }),
-      );
+      dispatch(addPrayerActionCreator(value, board.id, 'test desc', false));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');

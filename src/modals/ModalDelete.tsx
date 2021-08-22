@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, TouchableOpacity, Modal} from 'react-native';
+import {Button, Modal} from 'react-native';
 import styled from 'styled-components/native';
-import {removeBoardRequest} from '../store/boardsSlice';
+import {removeBoardActionCreator} from '../store/sagasActions';
 import {useAppDispatch} from '../store/store';
 
 interface ModalDeleteProps {
@@ -31,7 +31,7 @@ const ModalDelete: React.FC<ModalDeleteProps> = ({
             color="#ac5253"
             title="Delete"
             onPress={() => {
-              dispatch(removeBoardRequest(boardId));
+              dispatch(removeBoardActionCreator(boardId));
               setModalActive(!modalActive);
             }}
           />

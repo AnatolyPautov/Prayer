@@ -38,6 +38,7 @@ export function* handleCreatePrayer({
 export function* handleDeletePrayer({
   payload,
 }: PayloadAction<number>): SagaIterator {
+  console.log(payload);
   try {
     yield call(requestDeletePrayer, payload);
     yield put(removePrayer(payload));
@@ -51,7 +52,6 @@ export function* handleUpdatePrayer({
   try {
     const response = yield call(requestUpdatePrayer, payload);
     const data = response.data;
-    console.log(data);
     yield put(updatePrayer(data));
   } catch (e) {
     console.log(e);

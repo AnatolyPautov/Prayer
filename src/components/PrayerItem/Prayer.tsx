@@ -13,14 +13,14 @@ import PrayerIcon from '../../icons/PrayerIcon';
 import UserIcon from '../../icons/UserIcon';
 import {useSelector} from 'react-redux';
 import * as Types from '../../types/types';
-import {
-  updatePrayerRequest,
-  removePrayerRequest,
-} from '../../store/prayersSlice';
 import {Routes} from '../../navigation/routes';
 import RectangleIcon from '../../icons/RectangleIcon';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {
+  removePrayerActionCreator,
+  updatePrayerActionCreator,
+} from '../../store/sagasActions';
 
 interface PrayerProps {
   prayer: Types.Prayer;
@@ -30,7 +30,7 @@ const Prayer: React.FC<PrayerProps> = ({prayer}) => {
 
   const navigation =
     useNavigation<
-      StackNavigationProp<Types.RootStackParamList, Routes.PrayersScreen>
+      StackNavigationProp<Types.RootStackParamList, Routes.PrayersHeaderScreen>
     >();
 
   const comments = useSelector(getCommentsById(prayer.id));
@@ -38,7 +38,7 @@ const Prayer: React.FC<PrayerProps> = ({prayer}) => {
   const rightSwipe = () => {
     return (
       <TouchableOpacity
-        onPress={() => dispatch(removePrayerRequest(prayer.id))}>
+        onPress={() => dispatch(removePrayerActionCreator(prayer.id))}>
         <DeleteBox>
           <Text style={{color: 'white'}}>Delete</Text>
         </DeleteBox>
@@ -58,14 +58,14 @@ const Prayer: React.FC<PrayerProps> = ({prayer}) => {
               tintColors={{true: '#514D47', false: '514D47'}}
               disabled={false}
               value={prayer.checked}
-              onValueChange={newValue =>
+              onValueChange={checked =>
                 dispatch(
-                  updatePrayerRequest({
-                    title: prayer.title,
-                    description: 'update',
-                    checked: newValue,
-                    id: prayer.id,
-                  }),
+                  updatePrayerActionCreator(
+                    prayer.title,
+                    'update',
+                    checked,
+                    prayer.id,
+                  ),
                 )
               }
             />

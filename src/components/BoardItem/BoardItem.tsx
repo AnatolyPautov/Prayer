@@ -22,7 +22,7 @@ const BoardItem: React.FC<BoardItemProps> = ({board}) => {
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <TouchableOpacity
-        onPress={() => navigation.navigate(Routes.PrayersHeader, {board})}
+        onPress={() => navigation.navigate(Routes.PrayersHeaderScreen, {board})}
         onLongPress={() => setModalActive(!modalActive)}>
         <BoardText>{board.title}</BoardText>
       </TouchableOpacity>

@@ -1,13 +1,16 @@
 import React from 'react';
 import {FlatList, View, Alert} from 'react-native';
 import {useSelector} from 'react-redux';
-import Plus from '../../icons/Plus';
+import Plus from '../../../icons/Plus';
 import styled from 'styled-components/native';
-import {createBoard, getBoardsRequest} from '../../store/boardsSlice';
-import {getBoards, useAppDispatch} from '../../store/store';
-import {getPrayersRequest} from '../../store/prayersSlice';
-import {getCommentsRequest} from '../../store/commentsSlice';
-import BoardItem from '../BoardItem';
+import {getBoards, useAppDispatch} from '../../../store/store';
+import BoardItem from '../../../components/BoardItem';
+import {
+  addBoardActionCreator,
+  getBoardsActionCreator,
+  getCommentsActionCreator,
+  getPrayersActionCreator,
+} from '../../../store/sagasActions';
 
 interface BoardProps {}
 
@@ -15,9 +18,9 @@ const BoardScreen: React.FC<BoardProps> = ({}) => {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    dispatch(getBoardsRequest({}));
-    dispatch(getPrayersRequest({}));
-    dispatch(getCommentsRequest({}));
+    dispatch(getBoardsActionCreator());
+    dispatch(getPrayersActionCreator());
+    dispatch(getCommentsActionCreator());
   }, [dispatch]);
 
   const [value, setValue] = React.useState<string>('');
@@ -26,7 +29,7 @@ const BoardScreen: React.FC<BoardProps> = ({}) => {
 
   const pressHandler = () => {
     if (value.trim()) {
-      dispatch(createBoard({title: value, description: 'test desc'}));
+      dispatch(addBoardActionCreator(value, 'test desc'));
       setValue('');
     } else {
       Alert.alert('название дела не может быть пустым');

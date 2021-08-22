@@ -1,17 +1,17 @@
 import React from 'react';
 import {Text, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
-import {getPrayersChecked, getPrayersUnchecked} from '../../store/store';
+import {getPrayersChecked, getPrayersUnchecked} from '../../../store/store';
 import styled from 'styled-components/native';
-import * as Types from '../../types/types';
 import {RouteProp} from '@react-navigation/native';
-import {Routes} from '../../navigation/routes';
-import Prayer from '../PrayerItem';
+import {Routes} from '../../../navigation/routes';
+import Prayer from '../../../components/PrayerItem';
+import {TabStackParam} from '../../../navigation/TabRoute';
 
 interface SubscribedProps {
-  route: RouteProp<Types.RootStackParamList, Routes.Subscribed>;
+  route: RouteProp<TabStackParam, Routes.SubscribedScreen>;
 }
-const Subscribed: React.FC<SubscribedProps> = ({route}) => {
+const SubscribedScreen: React.FC<SubscribedProps> = ({route}) => {
   const [answers, setAnswers] = React.useState<boolean>(false);
 
   const {board} = route.params;
@@ -73,4 +73,4 @@ const ButtonText = styled.Text`
   text-align: center;
 `;
 
-export default Subscribed;
+export default SubscribedScreen;

@@ -29,6 +29,7 @@ export function* signInRequestHandler({
   try {
     const {data, ...responseInfo} = yield call(signIn, {...payload});
     if (responseInfo.status !== 200 && data.message) {
+      console.log({data, ...responseInfo});
       yield put(requestFailed(data.message));
       return;
     }

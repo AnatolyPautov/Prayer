@@ -4,7 +4,8 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import * as Types from '../../types/types';
 import styled from 'styled-components/native';
 import {useAppDispatch} from '../../store/store';
-import {removeCommentRequest} from '../../store/commentsSlice';
+import {removeCommentActionCreator} from '../../store/sagasActions';
+import {timeFromNow} from '../../utils/timeFromNow';
 
 interface CommentProps {
   comment: Types.Comment;
@@ -15,7 +16,7 @@ const Comment: React.FC<CommentProps> = ({comment}) => {
   const rightSwipe = () => {
     return (
       <TouchableOpacity
-        onPress={() => dispatch(removeCommentRequest(comment.id))}>
+        onPress={() => dispatch(removeCommentActionCreator(comment.id))}>
         <DeleteBox>
           <Text style={{color: 'white'}}>Delete</Text>
         </DeleteBox>
@@ -32,7 +33,9 @@ const Comment: React.FC<CommentProps> = ({comment}) => {
             <Text style={{fontSize: 17, lineHeight: 20, marginRight: 6}}>
               {comment.userId}
             </Text>
-            <Text style={{color: '#9C9C9C'}}>2 days ago</Text>
+            <Text style={{color: '#9C9C9C'}}>
+              {timeFromNow(comment.created)}
+            </Text>
           </View>
           <Text>{comment.body}</Text>
         </View>

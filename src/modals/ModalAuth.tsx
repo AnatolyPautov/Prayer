@@ -8,8 +8,12 @@ import {cleanErrors} from '../store/userSlice';
 const ModalAuth = ({}) => {
   const dispatch = useAppDispatch();
   const user = useSelector(getUser);
+  console.log(user.errors);
+
   return (
-    <Modal transparent={true} visible={user.errors.length > 0}>
+    <Modal
+      transparent={true}
+      visible={user.errors !== undefined && user.errors !== ''}>
       <ModalWrapper>
         <ModalBlock>
           <Text style={{color: 'red', marginBottom: 30}}>
