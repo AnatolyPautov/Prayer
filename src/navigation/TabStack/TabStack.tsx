@@ -19,7 +19,6 @@ interface TabRouteProps {
 export const TabStack: React.FC<TabRouteProps> = ({board}) => {
   return (
     <Tab.Navigator
-      initialRouteName={Routes.PrayersScreen}
       screenOptions={{
         swipeEnabled: false,
         tabBarLabelStyle: {color: '#72A8BC'},

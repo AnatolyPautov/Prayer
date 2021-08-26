@@ -1,11 +1,11 @@
 export enum Routes {
-  LoginScreen = 'Login',
-  RegistrationScreen = 'Registration',
-  BoardScreen = 'Board',
-  PrayersScreen = 'Prayers',
-  DetailsScreen = 'Details',
-  SubscribedScreen = 'Subscribed',
-  PrayersHeaderScreen = 'PrayersHeader',
+  LoginScreen = 'LoginScreen',
+  RegistrationScreen = 'RegistrationScreen',
+  BoardScreen = 'BoardScreen',
+  PrayersScreen = 'PrayersScreen',
+  DetailsScreen = 'DetailsScreen',
+  SubscribedScreen = 'SubscribedScreen',
+  PrayersHeaderScreen = 'PrayersHeaderScreen',
   AuthStack = 'AuthStack',
   MainStack = 'MainStack',
 }

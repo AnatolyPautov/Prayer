@@ -11,6 +11,7 @@ import {Routes} from '../../routes';
 import ModalAuth from '../../../modals/ModalAuth';
 import ModalIndicator from '../../../modals/ModalIndicator';
 import {AuthStackParamList} from '../AuthStack';
+import InputField from '../../../components/InputField';
 
 interface LoginProps {
   navigation: StackNavigationProp<AuthStackParamList, Routes.LoginScreen>;
@@ -26,6 +27,8 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
     form.reset();
   };
 
+  const required = (value: string) => (value ? undefined : 'Required');
+
   return (
     <Container>
       <Form
@@ -35,30 +38,15 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
             <LoginBlock>
               <Field
                 name="email"
-                render={({input, meta}) => {
-                  return (
-                    <View>
-                      <LoginInput
-                        placeholder="Write your email"
-                        value={input.value}
-                        onChangeText={input.onChange}
-                      />
-                    </View>
-                  );
-                }}
+                placeholder="Write your email"
+                component={InputField}
+                validate={required}
               />
               <Field
                 name="password"
-                render={({input}) => {
-                  return (
-                    <LoginInput
-                      placeholder="Write your password"
-                      secureTextEntry
-                      value={input.value}
-                      onChangeText={input.onChange}
-                    />
-                  );
-                }}
+                placeholder="Write your password"
+                component={InputField}
+                validate={required}
               />
               <LoginButton
                 onPress={handleSubmit}
@@ -98,17 +86,12 @@ const LoginBlock = styled.View`
   margin: 0 15px;
   justify-content: center;
 `;
-const LoginInput = styled.TextInput`
-  text-align: center;
-  margin: 0 15px 40px;
-  border-style: solid;
-  border-color: #e5e5e5;
-  border-width: 1px;
-  border-radius: 10px;
-`;
-const LoginButton = styled.TouchableOpacity`
+type LoginButtonProps = {
+  disabled: boolean | null | undefined;
+};
+const LoginButton = styled.TouchableOpacity<LoginButtonProps>`
   margin: 0 15px;
-  background: #e5e5e5;
+  background: ${({disabled}) => (disabled ? '#e5e5e5' : '#66b5e3')};
   padding: 20px;
   align-items: center;
   border-radius: 10px;

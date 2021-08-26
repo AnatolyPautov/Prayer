@@ -11,6 +11,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import ModalIndicator from '../../../modals/ModalIndicator';
 import ModalAuth from '../../../modals/ModalAuth';
 import {AuthStackParamList} from '../AuthStack';
+import InputField from '../../../components/InputField';
 
 interface RegistrationProps {
   navigation: StackNavigationProp<
@@ -30,6 +31,7 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
     dispatch(signUpRequest({email, name, password}));
     form.reset();
   };
+  const required = (value: string) => (value ? undefined : 'Required');
 
   if (user.isAuth === true) {
     return <ActivityIndicator color="#0000ff" />;
@@ -43,46 +45,30 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
             <LoginBlock>
               <Field
                 name="name"
-                render={({input}) => {
-                  return (
-                    <LoginInput
-                      placeholder="Write your name"
-                      onChangeText={input.onChange}
-                      value={input.value}
-                    />
-                  );
-                }}
+                placeholder="Write your name"
+                component={InputField}
+                validate={required}
               />
               <Field
                 name="email"
-                render={({input}) => {
-                  return (
-                    <LoginInput
-                      placeholder="Write your email"
-                      onChangeText={input.onChange}
-                      value={input.value}
-                    />
-                  );
-                }}
+                placeholder="Write your email"
+                component={InputField}
+                validate={required}
               />
               <Field
                 name="password"
-                render={({input}) => {
-                  return (
-                    <LoginInput
-                      placeholder="Write your password"
-                      onChangeText={input.onChange}
-                      value={input.value}
-                    />
-                  );
-                }}
+                placeholder="Write your password"
+                component={InputField}
+                validate={required}
               />
               <LoginButton
                 onPress={handleSubmit}
                 disabled={!values.name || !values.email || !values.password}>
                 <Text
                   style={
-                    !values.password || !values.email ? {opacity: 0.3} : null
+                    !values.password || !values.email || !values.password
+                      ? {opacity: 0.3}
+                      : null
                   }>
                   Sign in
                 </Text>
@@ -112,17 +98,12 @@ const LoginBlock = styled.View`
   margin: 0 15px;
   justify-content: center;
 `;
-const LoginInput = styled.TextInput`
-  text-align: center;
-  margin: 0 15px 40px;
-  border-style: solid;
-  border-color: #e5e5e5;
-  border-width: 1px;
-  border-radius: 10px;
-`;
-const LoginButton = styled.TouchableOpacity`
+type LoginButtonProps = {
+  disabled: boolean | null | undefined;
+};
+const LoginButton = styled.TouchableOpacity<LoginButtonProps>`
   margin: 0 15px;
-  background: #e5e5e5;
+  background: ${({disabled}) => (disabled ? '#e5e5e5' : '#66b5e3')};
   padding: 20px;
   align-items: center;
   border-radius: 10px;

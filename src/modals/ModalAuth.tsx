@@ -8,7 +8,6 @@ import {cleanErrors} from '../store/userSlice';
 const ModalAuth = ({}) => {
   const dispatch = useAppDispatch();
   const user = useSelector(getUser);
-  console.log(user.errors);
 
   return (
     <Modal
