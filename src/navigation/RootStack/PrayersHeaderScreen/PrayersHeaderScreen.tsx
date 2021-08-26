@@ -4,11 +4,11 @@ import SettingIcon from '../../../icons/SettingIcon';
 import styled from 'styled-components/native';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../../navigation/routes';
-import {TabRoute} from '../../../navigation/TabRoute';
-import {RootStackParamList} from '../../../navigation/StackRoute';
+import {TabStack} from '../../TabStack/TabStack';
+import {MainStackParamList} from '../MainStack';
 
 interface PrayerProps {
-  route: RouteProp<RootStackParamList, Routes.PrayersHeaderScreen>;
+  route: RouteProp<MainStackParamList, Routes.PrayersHeaderScreen>;
 }
 const PrayersHeaderScreen: React.FC<PrayerProps> = ({route}) => {
   const {board} = route.params;
@@ -22,7 +22,7 @@ const PrayersHeaderScreen: React.FC<PrayerProps> = ({route}) => {
         </Setting>
       </Header>
       <Container>
-        <TabRoute board={board} />
+        <TabStack board={board} />
       </Container>
     </View>
   );

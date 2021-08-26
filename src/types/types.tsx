@@ -1,5 +1,3 @@
-import {Routes} from '../navigation/routes';
-
 export type Board = {
   id: number;
   title: string;

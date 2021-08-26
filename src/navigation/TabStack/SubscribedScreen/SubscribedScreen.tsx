@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../../navigation/routes';
 import Prayer from '../../../components/PrayerItem';
-import {TabStackParam} from '../../../navigation/TabRoute';
+import {TabStackParam} from '../TabStack';
 
 interface SubscribedProps {
   route: RouteProp<TabStackParam, Routes.SubscribedScreen>;

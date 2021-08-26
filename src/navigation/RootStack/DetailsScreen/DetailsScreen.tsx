@@ -7,15 +7,15 @@ import MessageIcon from '../../../icons/MessageIcon';
 import Plus from '../../../icons/Plus';
 import {getCommentsById, useAppDispatch} from '../../../store/store';
 import Comment from '../../../components/Comment';
-import {Routes} from '../../../navigation/routes';
 import RectangleIcon from '../../../icons/RectangleIcon';
 import HeaderDetails from '../../../layouts/HeaderDetails';
 import {getCurrentDate} from '../../../utils/getCurrentDate';
 import {addCommentActionCreator} from '../../../store/sagasActions';
-import {RootStackParamList} from '../../../navigation/StackRoute';
+import {MainStackParamList} from '../MainStack';
+import {Routes} from '../../routes';
 
 interface DetailsProps {
-  route: RouteProp<RootStackParamList, Routes.DetailsScreen>;
+  route: RouteProp<MainStackParamList, Routes.DetailsScreen>;
 }
 const DetailsScreen: React.FC<DetailsProps> = ({route}) => {
   const [value, setValue] = React.useState<string>('');
@@ -81,9 +81,7 @@ const DetailsScreen: React.FC<DetailsProps> = ({route}) => {
               )}
             />
           </View>
-          <IconPlusContainer
-          /* onPress={() => dispatch()} */
-          >
+          <IconPlusContainer>
             <Plus width={16} color={'#fff'} />
           </IconPlusContainer>
         </View>

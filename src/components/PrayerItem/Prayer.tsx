@@ -21,6 +21,7 @@ import {
   removePrayerActionCreator,
   updatePrayerActionCreator,
 } from '../../store/sagasActions';
+import {MainStackParamList} from '../../navigation/RootStack/MainStack';
 
 interface PrayerProps {
   prayer: Types.Prayer;
@@ -30,7 +31,7 @@ const Prayer: React.FC<PrayerProps> = ({prayer}) => {
 
   const navigation =
     useNavigation<
-      StackNavigationProp<Types.RootStackParamList, Routes.PrayersHeaderScreen>
+      StackNavigationProp<MainStackParamList, Routes.PrayersHeaderScreen>
     >();
 
   const comments = useSelector(getCommentsById(prayer.id));

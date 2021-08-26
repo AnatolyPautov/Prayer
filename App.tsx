@@ -1,18 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
 import Context from './context';
-import StackRoute from './src/navigation/StackRoute';
+import Router from './src/navigation/Router';
 
 const App = () => {
   const [userName, setUserName] = React.useState<string>('');
 
   return (
     <Context.Provider value={{userName, setUserName}}>
-      <StackRoute />
+      <Router />
     </Context.Provider>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;

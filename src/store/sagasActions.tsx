@@ -1,16 +1,16 @@
-const GET_BOARDS = 'GET-BOARDS';
-const GET_PRAYERS = 'GET-PRAYERS';
-const GET_COMMENTS = 'GET-COMMENTS';
+export const GET_BOARDS = 'GET-BOARDS';
+export const GET_PRAYERS = 'GET-PRAYERS';
+export const GET_COMMENTS = 'GET-COMMENTS';
 
-const ADD_BOARD = 'ADD-BOARD';
-const ADD_PRAYER = 'ADD-PRAYER';
-const ADD_COMMENT = 'ADD-COMMENT';
+export const ADD_BOARD = 'ADD-BOARD';
+export const ADD_PRAYER = 'ADD-PRAYER';
+export const ADD_COMMENT = 'ADD-COMMENT';
 
-const REMOVE_BOARD = 'REMOVE-BOARD';
-const REMOVE_PRAYER = 'REMOVE-PRAYER';
-const REMOVE_COMMENT = 'REMOVE-COMMENT';
+export const REMOVE_BOARD = 'REMOVE-BOARD';
+export const REMOVE_PRAYER = 'REMOVE-PRAYER';
+export const REMOVE_COMMENT = 'REMOVE-COMMENT';
 
-const UPDATE_PRAYER = 'UPDATE-PRAYER';
+export const UPDATE_PRAYER = 'UPDATE-PRAYER';
 
 export const getBoardsActionCreator = () => ({type: GET_BOARDS});
 export const getPrayersActionCreator = () => ({type: GET_PRAYERS});

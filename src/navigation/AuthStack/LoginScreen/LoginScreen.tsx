@@ -1,39 +1,31 @@
 import React from 'react';
-import {ActivityIndicator, Modal, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
 import {getUser, useAppDispatch} from '../../../store/store';
-import {signUpRequest} from '../../../store/userSlice';
+import {signInRequest} from '../../../store/userSlice';
 import {useSelector} from 'react-redux';
-import {Routes} from '../../../navigation/routes';
 import {StackNavigationProp} from '@react-navigation/stack';
-import ModalIndicator from '../../../modals/ModalIndicator';
+import {Routes} from '../../routes';
 import ModalAuth from '../../../modals/ModalAuth';
-import {AuthStackParamList} from '../../../navigation/StackRoute';
+import ModalIndicator from '../../../modals/ModalIndicator';
+import {AuthStackParamList} from '../AuthStack';
 
-interface RegistrationProps {
-  navigation: StackNavigationProp<
-    AuthStackParamList,
-    Routes.RegistrationScreen
-  >;
+interface LoginProps {
+  navigation: StackNavigationProp<AuthStackParamList, Routes.LoginScreen>;
 }
 
-const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
+const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
   const dispatch = useAppDispatch();
+
   const user = useSelector(getUser);
 
-  const onSubmitForm = (
-    {name, email, password}: FormProps,
-    form: FormApi<FormProps>,
-  ) => {
-    dispatch(signUpRequest({email, name, password}));
+  const onSubmitForm = (values: FormProps, form: FormApi<FormProps>) => {
+    dispatch(signInRequest({email: values.email, password: values.password}));
     form.reset();
   };
 
-  if (user.isAuth === true) {
-    return <ActivityIndicator color="#0000ff" />;
-  }
   return (
     <Container>
       <Form
@@ -42,26 +34,16 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
           return (
             <LoginBlock>
               <Field
-                name="name"
-                render={({input}) => {
-                  return (
-                    <LoginInput
-                      placeholder="Write your name"
-                      onChangeText={input.onChange}
-                      value={input.value}
-                    />
-                  );
-                }}
-              />
-              <Field
                 name="email"
-                render={({input}) => {
+                render={({input, meta}) => {
                   return (
-                    <LoginInput
-                      placeholder="Write your email"
-                      onChangeText={input.onChange}
-                      value={input.value}
-                    />
+                    <View>
+                      <LoginInput
+                        placeholder="Write your email"
+                        value={input.value}
+                        onChangeText={input.onChange}
+                      />
+                    </View>
                   );
                 }}
               />
@@ -71,15 +53,16 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
                   return (
                     <LoginInput
                       placeholder="Write your password"
-                      onChangeText={input.onChange}
+                      secureTextEntry
                       value={input.value}
+                      onChangeText={input.onChange}
                     />
                   );
                 }}
               />
               <LoginButton
                 onPress={handleSubmit}
-                disabled={!values.name || !values.email || !values.password}>
+                disabled={!values.password || !values.email}>
                 <Text
                   style={
                     !values.password || !values.email ? {opacity: 0.3} : null
@@ -87,8 +70,11 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
                   Sign in
                 </Text>
               </LoginButton>
-              <Link onPress={() => navigation.goBack()}>
-                <Text style={{color: '#a369ec'}}>Уже зарегистрированны?</Text>
+              <Link
+                onPress={() => navigation.navigate(Routes.RegistrationScreen)}>
+                <Text style={{color: '#a369ec'}}>
+                  Еще не зарегистрированны?
+                </Text>
               </Link>
             </LoginBlock>
           );
@@ -132,4 +118,4 @@ const Link = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export default RegistrationScreen;
+export default LoginScreen;

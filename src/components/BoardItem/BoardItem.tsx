@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import ModalDelete from '../../modals/ModalDelete';
+import {MainStackParamList} from '../../navigation/RootStack/MainStack';
 
 interface BoardItemProps {
   board: Types.Board;
@@ -16,7 +17,7 @@ const BoardItem: React.FC<BoardItemProps> = ({board}) => {
 
   const navigation =
     useNavigation<
-      StackNavigationProp<Types.RootStackParamList, Routes.BoardScreen>
+      StackNavigationProp<MainStackParamList, Routes.BoardScreen>
     >();
 
   return (

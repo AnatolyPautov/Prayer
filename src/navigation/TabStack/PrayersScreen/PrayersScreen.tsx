@@ -12,7 +12,7 @@ import styled from 'styled-components/native';
 import {RouteProp} from '@react-navigation/native';
 import {Routes} from '../../../navigation/routes';
 import {addPrayerActionCreator} from '../../../store/sagasActions';
-import {TabStackParam} from '../../../navigation/TabRoute';
+import {TabStackParam} from '../TabStack';
 
 interface PrayerProps {
   route: RouteProp<TabStackParam, Routes.PrayersScreen>;

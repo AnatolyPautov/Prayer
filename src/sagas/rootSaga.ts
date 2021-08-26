@@ -17,21 +17,33 @@ import {
 } from './handlers/comments';
 import {signInRequest, signUpRequest} from '../store/userSlice';
 import {signInRequestHandler, signUpRequestHandler} from './handlers/user';
+import {
+  GET_BOARDS,
+  GET_COMMENTS,
+  GET_PRAYERS,
+  ADD_BOARD,
+  ADD_PRAYER,
+  ADD_COMMENT,
+  REMOVE_BOARD,
+  REMOVE_PRAYER,
+  REMOVE_COMMENT,
+  UPDATE_PRAYER,
+} from '../store/sagasActions';
 
 export function* watcherSaga() {
-  yield takeLatest('GET-BOARDS', handleGetBoards);
-  yield takeLatest('GET-PRAYERS', handleGetPrayers);
-  yield takeLatest('GET-COMMENTS', handleGetComments);
+  yield takeLatest(GET_BOARDS, handleGetBoards);
+  yield takeLatest(GET_PRAYERS, handleGetPrayers);
+  yield takeLatest(GET_COMMENTS, handleGetComments);
 
-  yield takeLatest('ADD-BOARD', handleCreateBoard);
-  yield takeLatest('ADD-PRAYER', handleCreatePrayer);
-  yield takeLatest('ADD-COMMENT', handleCreateComment);
+  yield takeLatest(ADD_BOARD, handleCreateBoard);
+  yield takeLatest(ADD_PRAYER, handleCreatePrayer);
+  yield takeLatest(ADD_COMMENT, handleCreateComment);
 
-  yield takeLatest('REMOVE-BOARD', handleDeleteBoard);
-  yield takeLatest('REMOVE-PRAYER', handleDeletePrayer);
-  yield takeLatest('REMOVE-COMMENT', handleDeleteComment);
+  yield takeLatest(REMOVE_BOARD, handleDeleteBoard);
+  yield takeLatest(REMOVE_PRAYER, handleDeletePrayer);
+  yield takeLatest(REMOVE_COMMENT, handleDeleteComment);
 
-  yield takeLatest('UPDATE-PRAYER', handleUpdatePrayer);
+  yield takeLatest(UPDATE_PRAYER, handleUpdatePrayer);
 
   yield takeLatest(signUpRequest.type, signUpRequestHandler);
   yield takeLatest(signInRequest.type, signInRequestHandler);

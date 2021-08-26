@@ -1,9 +1,9 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Routes} from './routes';
-import PrayersScreen from '../stacks/TabStack/PrayersScreen/PrayersScreen';
-import SubscribedScreen from '../stacks/TabStack/SubscribedScreen';
-import * as Types from '../types/types';
+import {Routes} from '../routes';
+import PrayersScreen from './PrayersScreen';
+import SubscribedScreen from './SubscribedScreen';
+import * as Types from '../../types/types';
 
 export type TabStackParam = {
   [Routes.PrayersScreen]: {board: Types.Board};
@@ -16,7 +16,7 @@ interface TabRouteProps {
   board: Types.Board;
 }
 
-export const TabRoute: React.FC<TabRouteProps> = ({board}) => {
+export const TabStack: React.FC<TabRouteProps> = ({board}) => {
   return (
     <Tab.Navigator
       initialRouteName={Routes.PrayersScreen}
