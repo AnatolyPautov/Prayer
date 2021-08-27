@@ -15,6 +15,7 @@ export function* signUpRequestHandler({
   try {
     const {data, ...responseInfo} = yield call(signUp, {...payload});
     if (responseInfo.status !== 200 && data.message) {
+      console.log({data, ...responseInfo});
       yield put(requestFailed(data.message));
       return;
     }

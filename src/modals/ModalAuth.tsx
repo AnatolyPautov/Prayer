@@ -5,7 +5,10 @@ import styled from 'styled-components/native';
 import {getUser, useAppDispatch} from '../store/store';
 import {cleanErrors} from '../store/userSlice';
 
-const ModalAuth = ({}) => {
+interface ModalAuthProps {
+  auth: string;
+}
+const ModalAuth: React.FC<ModalAuthProps> = ({auth}) => {
   const dispatch = useAppDispatch();
   const user = useSelector(getUser);
 
@@ -15,8 +18,10 @@ const ModalAuth = ({}) => {
       visible={user.errors !== undefined && user.errors !== ''}>
       <ModalWrapper>
         <ModalBlock>
-          <Text style={{color: 'red', marginBottom: 30}}>
-            Такой пользватель уже существует
+          <Text style={{color: 'red', marginBottom: 30, textAlign: 'center'}}>
+            {auth === 'login'
+              ? 'invalid email or password'
+              : 'such a user already exists'}
           </Text>
           <Button
             title="Ok"
@@ -40,7 +45,6 @@ const ModalBlock = styled.View`
   margin: 0 15px;
   border-radius: 30px;
   padding: 30px;
-  flex-direction: row;
   justify-content: space-between;
 `;
 

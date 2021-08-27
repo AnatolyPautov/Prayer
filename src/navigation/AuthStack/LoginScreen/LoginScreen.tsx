@@ -12,6 +12,7 @@ import ModalAuth from '../../../modals/ModalAuth';
 import ModalIndicator from '../../../modals/ModalIndicator';
 import {AuthStackParamList} from '../AuthStack';
 import InputField from '../../../components/InputField';
+import {validateEmail, validateInput} from '../../../utils/validation/validate';
 
 interface LoginProps {
   navigation: StackNavigationProp<AuthStackParamList, Routes.LoginScreen>;
@@ -27,8 +28,6 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
     form.reset();
   };
 
-  const required = (value: string) => (value ? undefined : 'Required');
-
   return (
     <Container>
       <Form
@@ -40,13 +39,13 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
                 name="email"
                 placeholder="Write your email"
                 component={InputField}
-                validate={required}
+                validate={validateEmail}
               />
               <Field
                 name="password"
                 placeholder="Write your password"
                 component={InputField}
-                validate={required}
+                validate={validateInput}
               />
               <LoginButton
                 onPress={handleSubmit}
@@ -68,7 +67,7 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
           );
         }}
       />
-      <ModalAuth />
+      <ModalAuth auth="login" />
       {user.isFetching === true && <ModalIndicator />}
     </Container>
   );

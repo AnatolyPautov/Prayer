@@ -12,6 +12,7 @@ import ModalIndicator from '../../../modals/ModalIndicator';
 import ModalAuth from '../../../modals/ModalAuth';
 import {AuthStackParamList} from '../AuthStack';
 import InputField from '../../../components/InputField';
+import {validateEmail, validateInput} from '../../../utils/validation/validate';
 
 interface RegistrationProps {
   navigation: StackNavigationProp<
@@ -31,7 +32,6 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
     dispatch(signUpRequest({email, name, password}));
     form.reset();
   };
-  const required = (value: string) => (value ? undefined : 'Required');
 
   if (user.isAuth === true) {
     return <ActivityIndicator color="#0000ff" />;
@@ -47,19 +47,19 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
                 name="name"
                 placeholder="Write your name"
                 component={InputField}
-                validate={required}
+                validate={validateInput}
               />
               <Field
                 name="email"
                 placeholder="Write your email"
                 component={InputField}
-                validate={required}
+                validate={validateEmail}
               />
               <Field
                 name="password"
                 placeholder="Write your password"
                 component={InputField}
-                validate={required}
+                validate={validateInput}
               />
               <LoginButton
                 onPress={handleSubmit}
@@ -80,7 +80,7 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
           );
         }}
       />
-      <ModalAuth />
+      <ModalAuth auth="signUp" />
       {user.isFetching === true && <ModalIndicator />}
     </Container>
   );

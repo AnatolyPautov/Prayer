@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {FieldRenderProps} from 'react-final-form';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 
 export interface AuthInput extends FieldRenderProps<string> {
   placeholder: string;
@@ -14,11 +14,13 @@ const InputField: React.FC<AuthInput> = props => {
         {...props}
         onChange={props.input.onChange}
         value={props.input.value}
-        hasError={props.meta.touched && !props.input.value}
+        hasError={props.meta.error !== undefined && props.meta.touched}
         secureTextEntry={props.input.name === 'password' && true}
       />
-      {props.meta.error && props.meta.touched && (
-        <View>{props.meta.error}</View>
+      {props.input.value !== '' && (
+        <Error>
+          <Text style={{color: 'red'}}>{props.meta.error}</Text>
+        </Error>
       )}
     </InputContainer>
   );
@@ -37,6 +39,14 @@ const Input = styled.TextInput<InputProps>`
   border-color: ${({hasError}) => (hasError ? '#F05658' : '#e5e5e5')};
   border-width: 1px;
   border-radius: 10px;
+`;
+const Error = styled.View`
+  position: absolute;
+  bottom: 10px;
+  left: 16px;
+  width: 100%;
+  height: 30px;
+  color: red;
 `;
 
 export default InputField;
