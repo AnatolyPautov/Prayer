@@ -1,5 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import * as Types from '../types/types';
+import {createRoutine} from 'redux-saga-routines';
+
+export const signInRoutine = createRoutine('SIGN_IN_ROUTINE');
+export const signUpRoutine = createRoutine('SIGN_UP_ROUTINE');
 
 interface UserSliceState {
   user: Types.User;
@@ -24,39 +28,34 @@ export const userSlice = createSlice({
   name: 'User',
   initialState,
   reducers: {
-    signUpRequest(state, {payload}) {
-      state.isFetching = true;
-    },
-    signUpSuccsecResponse(state, {payload}: any) {
-      return (
-        payload.token && {user: {...payload}, isAuth: true, isFetching: false}
-      );
-    },
-    signInRequest(state, {payload}) {
-      state.isFetching = true;
-    },
-    signInSuccsecRequest(state, {payload}: any) {
-      return (
-        payload.token && {user: {...payload}, isAuth: true, isFetching: false}
-      );
+    cleanErrors(state) {
+      state.errors = '';
     },
     requestFailed(state, {payload}: PayloadAction<string>) {
       state.errors = payload;
       state.isFetching = false;
     },
-    cleanErrors(state) {
-      state.errors = '';
+  },
+  extraReducers: {
+    [signInRoutine.TRIGGER]: (state, action) => {
+      return {...state, isFetching: true};
+    },
+    [signInRoutine.SUCCESS]: (state, {payload}) => {
+      return (
+        payload.token && {user: {...payload}, isAuth: true, isFetching: false}
+      );
+    },
+    [signUpRoutine.TRIGGER]: (state, action) => {
+      return {...state, isFetching: true};
+    },
+    [signUpRoutine.SUCCESS]: (state, {payload}) => {
+      return (
+        payload.token && {user: {...payload}, isAuth: true, isFetching: false}
+      );
     },
   },
 });
 
-export const {
-  signUpRequest,
-  signUpSuccsecResponse,
-  signInRequest,
-  signInSuccsecRequest,
-  requestFailed,
-  cleanErrors,
-} = userSlice.actions;
+export const {requestFailed, cleanErrors} = userSlice.actions;
 
 export default userSlice.reducer;

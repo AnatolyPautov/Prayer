@@ -4,7 +4,6 @@ import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
 import {getUser, useAppDispatch} from '../../../store/store';
-import {signInRequest} from '../../../store/userSlice';
 import {useSelector} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Routes} from '../../routes';
@@ -13,6 +12,7 @@ import ModalIndicator from '../../../modals/ModalIndicator';
 import {AuthStackParamList} from '../AuthStack';
 import InputField from '../../../components/InputField';
 import {validateEmail, validateInput} from '../../../utils/validation/validate';
+import {signInRoutine} from '../../../store/userSlice';
 
 interface LoginProps {
   navigation: StackNavigationProp<AuthStackParamList, Routes.LoginScreen>;
@@ -24,7 +24,7 @@ const LoginScreen: React.FC<LoginProps> = ({navigation}) => {
   const user = useSelector(getUser);
 
   const onSubmitForm = (values: FormProps, form: FormApi<FormProps>) => {
-    dispatch(signInRequest({email: values.email, password: values.password}));
+    dispatch(signInRoutine({email: values.email, password: values.password}));
     form.reset();
   };
 

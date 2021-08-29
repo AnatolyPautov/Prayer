@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import * as Types from '../../types/types';
 import ModalDelete from '../../modals/ModalDelete';
-import {MainStackParamList} from '../../navigation/RootStack/MainStack';
+import {MainStackParamList} from '../../navigation/MainStack/MainStack';
 
 interface BoardItemProps {
   board: Types.Board;

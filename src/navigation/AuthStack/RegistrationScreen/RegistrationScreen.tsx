@@ -4,7 +4,6 @@ import {FormApi} from 'final-form';
 import {Field, Form, FormProps} from 'react-final-form';
 import styled from 'styled-components/native';
 import {getUser, useAppDispatch} from '../../../store/store';
-import {signUpRequest} from '../../../store/userSlice';
 import {useSelector} from 'react-redux';
 import {Routes} from '../../../navigation/routes';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -13,6 +12,7 @@ import ModalAuth from '../../../modals/ModalAuth';
 import {AuthStackParamList} from '../AuthStack';
 import InputField from '../../../components/InputField';
 import {validateEmail, validateInput} from '../../../utils/validation/validate';
+import {signUpRoutine} from '../../../store/userSlice';
 
 interface RegistrationProps {
   navigation: StackNavigationProp<
@@ -29,7 +29,7 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
     {name, email, password}: FormProps,
     form: FormApi<FormProps>,
   ) => {
-    dispatch(signUpRequest({email, name, password}));
+    dispatch(signUpRoutine({email, name, password}));
     form.reset();
   };
 
@@ -66,7 +66,7 @@ const RegistrationScreen: React.FC<RegistrationProps> = ({navigation}) => {
                 disabled={!values.name || !values.email || !values.password}>
                 <Text
                   style={
-                    !values.password || !values.email || !values.password
+                    !values.name || !values.email || !values.password
                       ? {opacity: 0.3}
                       : null
                   }>

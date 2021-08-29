@@ -4,8 +4,8 @@ import * as Types from '../../types/types';
 import {SagaIterator} from 'redux-saga';
 import {
   requestFailed,
-  signInSuccsecRequest,
-  signUpSuccsecResponse,
+  signInRoutine,
+  signUpRoutine,
 } from '../../store/userSlice';
 import {PayloadAction} from '@reduxjs/toolkit';
 
@@ -19,7 +19,8 @@ export function* signUpRequestHandler({
       yield put(requestFailed(data.message));
       return;
     }
-    yield put(signUpSuccsecResponse({...data}));
+    console.log('sdfsd');
+    yield put(signUpRoutine.success({...data}));
   } catch (e) {
     console.log(e);
   }
@@ -34,7 +35,7 @@ export function* signInRequestHandler({
       yield put(requestFailed(data.message));
       return;
     }
-    yield put(signInSuccsecRequest({...data}));
+    yield put(signInRoutine.success({...data}));
   } catch (e) {
     console.log(e);
   }

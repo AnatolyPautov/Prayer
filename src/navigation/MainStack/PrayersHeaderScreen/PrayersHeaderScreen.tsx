@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import SettingIcon from '../../../icons/SettingIcon';
 import styled from 'styled-components/native';
 import {RouteProp} from '@react-navigation/native';
-import {Routes} from '../../../navigation/routes';
+import {Routes} from '../../routes';
 import {TabStack} from '../../TabStack/TabStack';
 import {MainStackParamList} from '../MainStack';
 

@@ -15,7 +15,7 @@ import {
   handleDeleteComment,
   handleGetComments,
 } from './handlers/comments';
-import {signInRequest, signUpRequest} from '../store/userSlice';
+import {signInRoutine, signUpRoutine} from '../store/userSlice';
 import {signInRequestHandler, signUpRequestHandler} from './handlers/user';
 import {
   GET_BOARDS,
@@ -45,6 +45,6 @@ export function* watcherSaga() {
 
   yield takeLatest(UPDATE_PRAYER, handleUpdatePrayer);
 
-  yield takeLatest(signUpRequest.type, signUpRequestHandler);
-  yield takeLatest(signInRequest.type, signInRequestHandler);
+  yield takeLatest(signUpRoutine.TRIGGER, signUpRequestHandler);
+  yield takeLatest(signInRoutine.TRIGGER, signInRequestHandler);
 }

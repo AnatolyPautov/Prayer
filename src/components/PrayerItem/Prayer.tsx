@@ -21,7 +21,7 @@ import {
   removePrayerActionCreator,
   updatePrayerActionCreator,
 } from '../../store/sagasActions';
-import {MainStackParamList} from '../../navigation/RootStack/MainStack';
+import {MainStackParamList} from '../../navigation/MainStack/MainStack';
 
 interface PrayerProps {
   prayer: Types.Prayer;

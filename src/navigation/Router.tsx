@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import {Routes} from './routes';
 import {defaultOptions} from './options';
-import MainStack from './RootStack/MainStack';
+import MainStack from './MainStack/MainStack';
 import AuthStack from './AuthStack/AuthStack';
 import {useSelector} from 'react-redux';
 import {getUser} from '../store/store';
